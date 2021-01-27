@@ -1,0 +1,166 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
+
+
+/*GENERAL*/
+body {
+    font-family: "Maven Pro", sans-serif;
+}
+
+.page {
+    padding: 1rem;
+}
+
+.mainButton {
+    background-color: #3e5096;
+    display: block;
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: "Maven Pro", sans-serif;
+    width: 70%;
+    color: #ffffff;
+}
+
+.mainButton:hover {
+    background-color: #31333b;
+    color: #ffffff;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: unset;
+}
+
+ul {
+    margin-left: 1.5rem;
+    list-style: none;
+}
+
+button,
+input[type="submit"] {
+    border: none;
+    background: none;
+    color: unset;
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol  {
+    margin: 1em 0; /*top/bottom 1em, l/r 0em */
+}
+
+/*HEADER*/
+#header {
+    height: 60px;
+    display: flex; /* lex= expand to fill available space */
+    justify-content: space-between;
+    align-items: center; /* centre-align vertically */
+    background-color: #31333b;
+}
+
+#header .title {
+    margin: 0;
+    padding: 0 1rem; 
+    color: #ffffff;
+}
+
+#header .auth-options {
+    display: flex;
+    height: 100%;
+}
+
+#header .auth-options button {
+    background-color: #323a5a;
+    padding: 0 1rem;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+#header .auth-options button:hover {
+    background-color: #3e5096;
+    display: flex;
+    height: 100%;
+}
+
+@media screen and (max-width: 550px ) {
+    #header .title {
+        font-size: 1.2rem;
+    }
+    #header .auth-options button {
+        font-size: 0.8rem;
+        padding: 0 0.5rem;
+    }
+}
+
+/*ERRORS*/
+.error-notice {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border: 1px solid #f35959;
+    border-radius: 8px;
+    background-color: #f0b8b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.error-notice button {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f35959;
+    color: #ffffff;
+}
+
+.playerCard {
+    background-color: #50a4e9;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+
+
+/*/////////////////////////////////////////////////// */
+/* form */
+
+.form label,
+.form input {
+  display: block;
+}
+.form input {
+  margin-bottom: 1rem;
+}
+.form label {
+  margin-bottom: 0.2rem;
+}
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+  width: 100%;
+  padding: 0.3rem;
+  border: 1px solid #c2c2c2;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  font-size: 1.1rem;
+}
+.form input:focus {
+  border: 1px solid #50a4e9;
+  outline: none;
+}
+.form input[type="submit"] {
+  padding: 0.3rem 0.5rem;
+  background-color: #3e5096;
+  font-size: 1.1rem;
+  color: white;
+}
