@@ -1,23 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
-import { useHistory, Link } from "react-router-dom";
-import axios from "axios";
-import { CircularProgress } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import DisplayTeam from "./DisplayTeam";
 
 export default function MyTeam() {
 
-    const [players, setPlayers] = useState([]);
-
     const {userData} = useContext(UserContext);
-    //const history = useHistory();
 
     return(
 
         <div className="page">
             {userData.user ? (
             <>
-            <DisplayTeam/>
+            <DisplayTeam />
             </>
         ) : (
             <>

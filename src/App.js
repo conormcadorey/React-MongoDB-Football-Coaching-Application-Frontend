@@ -4,7 +4,7 @@ import Axios from "axios";
 import Header from "./components/layout/Header";
 import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
-import DisplayTeam from "./components/pages/DisplayTeam";
+//import DisplayTeam from "./components/pages/DisplayTeam";
 import MyTeam from "./components/pages/MyTeam";
 import Register from "./components/auth/Register";
 import UserContext from "./context/UserContext";
