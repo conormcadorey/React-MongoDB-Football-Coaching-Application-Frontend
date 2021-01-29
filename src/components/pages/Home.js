@@ -22,7 +22,9 @@ export default function Home() {
             <h1>Hello {userData.user.id}!</h1>
             <p>Select from an option below to begin</p>
             <nav>
+            <Link to="/match">
             <button className="mainButton">Start a match</button>
+            </Link>
             <br></br>
             <Link to="/myteam">
             <button className="mainButton">Your team</button>

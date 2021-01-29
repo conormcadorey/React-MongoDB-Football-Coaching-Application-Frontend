@@ -7,7 +7,7 @@ export default function MyTeam() {
 
     const {userData} = useContext(UserContext);
 
-    return(
+    return (
 
         <div className="page">
             {userData.user ? (

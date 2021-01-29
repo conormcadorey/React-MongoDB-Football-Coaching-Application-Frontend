@@ -6,6 +6,7 @@ import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
 //import DisplayTeam from "./components/pages/DisplayTeam";
 import MyTeam from "./components/pages/MyTeam";
+import Match from "./components/pages/Match";
 import Register from "./components/auth/Register";
 import UserContext from "./context/UserContext";
 import Test from "./components/pages/Test";
@@ -74,6 +75,7 @@ export default function App() {
                 <Route path="/register" component={Register} />
                 <Route path="/test" component={Test} />
                 <Route path="/myteam" component={MyTeam} />
+                <Route path="/match" component={Match} />
             </Switch>
             </div>
             </UserContext.Provider>
