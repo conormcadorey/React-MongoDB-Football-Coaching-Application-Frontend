@@ -1,6 +1,10 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import UserContext from "../../context/UserContext";
 import { useHistory, Link } from "react-router-dom";
+import NewMatchDialog from "./NewMatchDialog";
+
+import Container from '@material-ui/core/Container';
+
 
 export default function Home() {
 
@@ -14,27 +18,30 @@ export default function Home() {
     });
     */
 
+    //useEffect to clear oppTeam when match ends or match live = false
+
     return(
+        <Container component="main" maxWidth="xs">
         <div className="page">
             {userData.user ? (
             <>
             <h1>Hello {userData.user.userName}!</h1>
             <p>Select from an option below to begin</p>
             <nav>
-            <Link to="/match">
-            <button className="mainButton">Start a match</button>
-            </Link>
+            <NewMatchDialog/>
             <br></br>
+            <button className="mainButton">Upcoming matches</button>
+            <button className="mainButton">Previous matches</button>
             <Link to="/myteam">
             <button className="mainButton">Your team</button>
             </Link>
-            <button className="mainButton">Upcoming matches</button>
-            <Link to="/test">
+            <Link to="/createplayer">
             <button className="mainButton">Create a player</button>
             </Link>
             </nav>
-            </>
 
+            </>
+    
         ) : (
             <>
             <h2>Welcome to headr, the no1 application for amateur and youth football coaches!</h2>
@@ -44,5 +51,6 @@ export default function Home() {
             </>
         )}
         </div>
+        </Container>
   );
 }

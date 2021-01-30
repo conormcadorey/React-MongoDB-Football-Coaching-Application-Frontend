@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-export default function Test() {
+export default function CreatePlayer() {
   //state
   const [name, setName] = useState();
   const [position, setPosition] = useState();
@@ -135,19 +135,6 @@ export default function Test() {
 
     </Container>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      </div>  
+    </div>  
     );
 }
