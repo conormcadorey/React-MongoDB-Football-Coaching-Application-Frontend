@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
-import SportsIcon from '@material-ui/icons/Sports';
-
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -57,7 +55,7 @@ export default function SubmitModal() {
   return (
     <div>
       <Button onClick={handleOpen} size="medium" fullWidth="true">
-          END MATCH <SportsIcon/>
+          END MATCH 
       </Button>
 
       <Modal

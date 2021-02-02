@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Timer from "./Timer";
+import PauseTimer from "./PauseTimer";
 import SubmitModal from "./SubmitMatch";
 
 import { useSelector } from "react-redux";
@@ -20,7 +21,8 @@ export default function Match() {
     );
 
     const [title, setTitle] = useState(true);
-    const [pause, setPause] = useState(true);
+    //const [pause, setPause] = useState(true);
+    const [isRunning, setIsRunning] = useState(true);
     const [myGoals, setMyGoals] = useState(0);
     const [oppGoals, setOppGoals] = useState(0);
 
@@ -72,11 +74,12 @@ export default function Match() {
                         <h3>TEAM B GOAL</h3>
                     </Button>
                 <CardActions>
-                    <Button onClick={()=>{ setTitle(!title); setPause(!pause) }} size="medium" fullWidth="true">
-                        {pause ? ("PAUSE MATCH"):("RESUME MATCH")}
+                    <Button onClick={()=>{ setTitle(!title); setIsRunning(!isRunning) }} size="medium" fullWidth="true">
+                        {isRunning ? ("PAUSE MATCH"):("RESUME MATCH")}
                         </Button>
                 </CardActions>
                     <SubmitModal/>
+                    <PauseTimer/>
                 </Card>
         </div>
         </Box>       

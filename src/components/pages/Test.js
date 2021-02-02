@@ -1,45 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "./../../redux/todoSlice";
-//import TodoList from "./Test2";
-import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import PauseTimer from "./PauseTimer";
+import TestTimer from "./RedirectLogin";
 
 export default function Test() {
 
-  const [value, setValue] = useState("");
-
-  //use dispatch hook to modify state in the redux store 
-  const dispatch = useDispatch();
-
-  const history = useHistory();
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //dispatch hook takes in an action
-    //action is passed as first param (addTodo())
-    //define payload value using 'value' var
-    dispatch(addTodo(value));
-    //setValue(""); //reset empty text-input 
-    //redirect user to homepage 
-    history.push("/test2");
-  };
+  const isRunning = useSelector((state) => state.timer);
 
     return (
       <div className="page">
         <h2>REDUX TEST!</h2>
-        <form onSubmit={handleSubmit}>
-          <input value={value} onChange={handleChange}/>
-          <button onClick={handleSubmit}>Update</button>
-        </form>
-        <TodoList/>
-
-        <Link to="/test2">
-            <button className="mainButton">View match</button>
-            </Link>
+        <p>{isRunning ? ("TIMER RUNNING (LIVE)") : ("TIMER PAUSED")}</p>
+        <TestTimer/>
+        <PauseTimer/>
       </div>  
     );
 }
