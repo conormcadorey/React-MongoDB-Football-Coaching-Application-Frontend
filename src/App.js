@@ -12,6 +12,7 @@ import Match from "./components/pages/Match";
 import Register from "./components/auth/Register";
 import UserContext from "./context/UserContext";
 import CreatePlayer from "./components/pages/CreatePlayer";
+
 import Test from "./components/pages/Test";
 
 import "./styles.css";
@@ -79,6 +80,8 @@ export default function App() {
                 <Route path="/createplayer" component={CreatePlayer} />
                 <Route path="/myteam" component={MyTeam} />
                 <Route path="/match" component={Match} />
+
+                <Route path="/test" component={Test} />
             </Switch>
             </div>
             <Footer/>

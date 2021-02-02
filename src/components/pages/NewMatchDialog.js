@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { addOpposition } from "./../../redux/oppositionSlice";
+
+//import Match from "./Match";
 
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
@@ -16,8 +21,26 @@ import Typography from '@material-ui/core/Typography';
 
 export default function NewMatchDialog(props) {
 
-    const [isHome, setIsHome] = useState(true);
-    const [oppTeam, setOppTeam] = useState("");
+  const [isHome, setIsHome] = useState(true);
+  const [value, setValue] = useState("");
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //dispatch hook takes in an action
+    //action is passed as first param (addTodo())
+    //define payload value using 'value' var
+    dispatch(addOpposition(value));
+    //setValue(""); //reset empty text-input 
+    //redirect user to homepage 
+    history.push("/match");
+  };
 
     const toggleChecked = () => {
         setIsHome((prev) => !prev);
@@ -44,6 +67,7 @@ export default function NewMatchDialog(props) {
                     Create a new match
                 </Typography>
             </CardActions>
+            <form className="createMatchForm" onSubmit={handleSubmit}>
             <CardContent style={{backgroundColor: "#F4F4F4"}}>
                 <Typography align="center" variant="h5" component="h2">
                     My Team
@@ -51,7 +75,7 @@ export default function NewMatchDialog(props) {
                 <Typography align="center" color="textSecondary">
                     vs
                 </Typography>
-            <form>
+            
                     <TextField
                     variant="outlined"
                     margin="normal"
@@ -60,7 +84,8 @@ export default function NewMatchDialog(props) {
                     label="Opposition team"
                     id="opposition-team-name"
                     type="text"
-                    onChange={(e) => setOppTeam(e.target.value)}
+                    value={value} 
+                    onChange={handleChange}
                     />
                 <FormControl component="fieldset">
                     <FormGroup aria-label="position" row>
@@ -71,19 +96,20 @@ export default function NewMatchDialog(props) {
                         />
                     </FormGroup>
                 </FormControl>
-            </form>
+            
             </CardContent>
-            <Button size="large" style={{width: "50%"}}>
-                <Link style={{color: "#3e5096"}} to="/match"><h3>START MATCH NOW</h3></Link>
+            <Button 
+            size="large" 
+            style={{width: "50%"}}
+            type="submit"
+            onClick={handleSubmit}
+            >
+                <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
             </Button>
             <Button size="large" style={{width: "50%"}}>
                 <h3>SAVE FOR LATER </h3>
             </Button>
-
-            <h1>{oppTeam}</h1>
-
+            </form>
         </Card>
-
     );
-
 }

@@ -1,10 +1,19 @@
-import { combineReducers, createStore } from "redux";
-import oppTitleReducer from "./ducks/oppTitle";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import todoReducer from "./todoSlice";
+import oppositionReducer from "./oppositionSlice";
 
+//create a combine reducers var if using multiple slices
+//all reducers can be put in here and then passed into the store for export
 const reducer = combineReducers({
-    oppName: oppTitleReducer
+    //todos: todoReducer,
+    opposition: oppositionReducer,
 });
 
-const store = createStore(reducer);
+//store is the default export 
+const store = configureStore({
+    reducer
+});
 
 export default store;
+
+
