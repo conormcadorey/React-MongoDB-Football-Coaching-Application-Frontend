@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const timerSlice = createSlice({
 
     name: "timer",
-    initialState: false,
+    initialState: true,
     reducers: {
         changeTimer: (state) => !state,
     },
