@@ -32,6 +32,9 @@ export default function CreatePlayer() {
   //submit form function
   const submit = async (e) => {
     e.preventDefault(); //prevent reload 
+    if (!name) {
+      alert("Please enter the players name!");
+    } else {
     //get current form state to add to object
     //use axios to send the newUser object with headers
     try {
@@ -52,6 +55,7 @@ export default function CreatePlayer() {
       //errors
       err.response.data.msg && setError(err.response.data.msg);
     }
+  }
   };
 
   const useStyles = makeStyles((theme) => ({

@@ -4,15 +4,12 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addOpposition } from "./../../redux/oppositionSlice";
 
-//import Match from "./Match";
-
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -32,6 +29,9 @@ export default function NewMatchDialog(props) {
   }
 
   const handleSubmit = (e) => {
+    if (!value) {
+      alert("Please enter an opposition team!");
+    } else {
     e.preventDefault();
     //dispatch hook takes in an action
     //action is passed as first param (addTodo())
@@ -40,26 +40,15 @@ export default function NewMatchDialog(props) {
     //setValue(""); //reset empty text-input 
     //redirect user to homepage 
     history.push("/match");
+    }
   };
 
     const toggleChecked = () => {
         setIsHome((prev) => !prev);
       };
 
-     /////////////////////////
-     const useStyles = makeStyles({
-        root: {
-          minWidth: 275,
-        },
-        pos: {
-          marginBottom: 18,
-        },
-      });
-
-    const classes = useStyles();
-    /////////////////////////
-
     return (
+      <>
 
         <Card variant="outlined">
             <CardActions>
@@ -111,5 +100,6 @@ export default function NewMatchDialog(props) {
             </Button>
             </form>
         </Card>
+        </>
     );
 }

@@ -21,6 +21,7 @@ export default function TestTimer() {
         } 
     }, [isRunning]);
 
+    console.log(intervalId);
     //<h1>{seconds}</h1>
 
     //format timer

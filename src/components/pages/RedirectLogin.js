@@ -1,10 +1,23 @@
 import React from "react";
+import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 export default function RedirectToLogin() {
 
-        return (
-            <div className="page">   
-                <h1>EDIT</h1>
-            </div>   
-        );
+    const history = useHistory();
+
+    return (
+        <div className="LoginNotice">   
+        <p>Welcome to headr, the no1 application for amateur and youth football coaches!</p>
+        <Button 
+        fullWidth
+        variant="contained"
+        color="primary"
+        disableElevation
+        onClick={() => history.push("/login")}
+        >
+            Login
+        </Button>
+        </div>   
+    );
 }

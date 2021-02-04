@@ -103,6 +103,11 @@ h1, h2, h3, h4, h5, h6, p, ul, ol  {
     }
 }
 
+/*FOOTER*/
+.footerStyles {
+    padding: 1rem;
+}
+
 /*ERRORS*/
 .error-notice {
     margin: 1rem 0;
@@ -163,4 +168,16 @@ h1, h2, h3, h4, h5, h6, p, ul, ol  {
   background-color: #3e5096;
   font-size: 1.1rem;
   color: white;
+}
+
+/*LOGIN COMPONENT*/
+.LoginNotice {
+  margin: auto;
+  width: 50%;
+}
+
+/*PLAYER CARDS*/
+.playerCardButtons {
+    align-content: right;
+    background-color: #50a4e9;
 }

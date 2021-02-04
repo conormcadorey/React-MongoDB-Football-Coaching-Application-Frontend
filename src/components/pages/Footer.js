@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 
 export default function Footer() {
 
-    //Copyright 
+  //Copyright 
   function Copyright() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
@@ -20,10 +20,11 @@ export default function Footer() {
     );
   }
 
-    return (
-        <Box mt={8}>
+  return (
+    <div className="footerStyles">
+      <Box mt={8}>
         <Copyright />
       </Box>
-    );
-
+    </div>
+  );
 }
