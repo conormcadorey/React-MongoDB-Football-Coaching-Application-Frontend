@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import EditPlayerDialog from "./EditPlayerDialog";
+import DeletePlayerDialog from "./DeletePlayerDialog";
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Tooltip from '@material-ui/core/Tooltip';
 
 export default function DisplayTeam() {
 
@@ -21,8 +19,6 @@ export default function DisplayTeam() {
     useEffect(() => {
         let token = localStorage.getItem("auth-token");
         const url = "http://localhost:5000/players";
-        console.log("THE TOKEN:");
-        console.log(token);
 
         axios.get(`${url}/allauth`, {
             headers: {
@@ -32,10 +28,6 @@ export default function DisplayTeam() {
             .then( response => setPlayers(response.data))
             .catch( error => console.log(error));
     }, []);
-
-    const handleDelete = () => {
-        alert("permanently delete this player? You cannot undo this action!");
-      }
 
     /////////////////////////
     const useStyles = makeStyles({
@@ -53,12 +45,10 @@ export default function DisplayTeam() {
     //TODO
     //create seperate component for player card 
     //add loading dialogue when fetching cards from db
-    //add RedirectLogin component
-    //add delete/edit functionality
 
     return (
         <>
-        <h1>Your team</h1>
+        <div className="pageTitle"><h1>My team</h1></div>
         {players.map(player => {
             const { name, position, number } = player;
             return (
@@ -86,12 +76,8 @@ export default function DisplayTeam() {
                     </Box>
                     <Box display="flex" justifyContent="flex-end">
                         <CardActions>
-                            <Tooltip title="Edit player" arrow>
-                                <Button style={{ color: 'blue' }} size="large"><MoreVertIcon/></Button>
-                            </Tooltip>
-                            <Tooltip title="Delete player" arrow>
-                                <Button onClick={handleDelete} size="large"><DeleteIcon/></Button>
-                            </Tooltip> 
+                                <EditPlayerDialog name={name} position={position} number={number}/>
+                                <DeletePlayerDialog name={name}/>
                         </CardActions>
                     </Box>
                 </Card>

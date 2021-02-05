@@ -15,7 +15,6 @@ export default function Footer() {
           Headr
         </Link>{' '}
         {new Date().getFullYear()}
-        {'.'}
       </Typography>
     );
   }

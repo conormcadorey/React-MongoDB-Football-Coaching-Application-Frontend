@@ -45,7 +45,6 @@ return(
     {userData.user ? (
         <Container component="main">
             <div className="page">
-
             <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
                     <Box display="flex" style={{backgroundColor: "#F4F4F4"}}>
                         <Box flexGrow={1}>
@@ -62,20 +61,22 @@ return(
                     </Box>
              </Card>
 
-                {/*<h1>Hello {userData.user.userName}!</h1>
-                <p>Select from an option below to begin</p>*/}
-                <nav>
+            <nav>
                 <NewMatchDialog/>
                 <br></br>
-                <button className="mainButton">Upcoming matches</button>
-                <button className="mainButton">Previous matches</button>
+                <Link to="/fixtures">
+                    <button className="mainButton">Upcoming matches</button>
+                </Link>
+                <Link to="/fixtures">
+                    <button className="mainButton">Previous matches</button>
+                </Link>
                 <Link to="/myteam">
-                <button className="mainButton">Your team</button>
+                    <button className="mainButton">Your team</button>
                 </Link>
                 <Link to="/createplayer">
-                <button className="mainButton">Create a player</button>
+                    <button className="mainButton">Create a player</button>
                 </Link>
-                </nav>
+            </nav>
             </div>
         </Container>
     ) : (

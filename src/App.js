@@ -6,12 +6,13 @@ import Header from "./components/layout/Header";
 import Footer from "./components/pages/Footer";
 import Home from "./components/pages/Home";
 import Login from "./components/auth/Login";
-//import DisplayTeam from "./components/pages/DisplayTeam";
 import MyTeam from "./components/pages/MyTeam";
 import Match from "./components/pages/Match";
 import Register from "./components/auth/Register";
-import UserContext from "./context/UserContext";
 import CreatePlayer from "./components/pages/CreatePlayer";
+import MyFixtures from "./components/pages/Fixtures";
+
+import UserContext from "./context/UserContext";
 
 import Test from "./components/pages/Test";
 
@@ -80,6 +81,7 @@ export default function App() {
                 <Route path="/createplayer" component={CreatePlayer} />
                 <Route path="/myteam" component={MyTeam} />
                 <Route path="/match" component={Match} />
+                <Route path="/fixtures" component={MyFixtures} />
 
                 <Route path="/test" component={Test} />
             </Switch>
