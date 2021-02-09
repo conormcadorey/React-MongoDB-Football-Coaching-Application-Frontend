@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 export default function Home() {
 
@@ -27,7 +28,6 @@ export default function Home() {
 
     //useEffect to clear oppTeam when match ends or match live = false
 
-    /////////////////////////
     const useStyles = makeStyles({
         root: {
           //minWidth: 275,
@@ -35,10 +35,17 @@ export default function Home() {
         pos: {
           marginBottom: 18,
         },
+        button: {
+            padding: 14,
+            marginBottom: 16,
+            '&:hover': {
+                backgroundColor: '#31333b',
+                color: '#FFF'
+            }
+        },
       });
 
     const classes = useStyles();
-    /////////////////////////
 
 return (
         <>
@@ -64,19 +71,50 @@ return (
                 <nav>
                     <NewMatchDialog myTeam={userData.user.team}/>
                     <br></br>
-                    <Link to="/fixtures">
-                        <button className="mainButton">Upcoming matches</button>
-                    </Link>
-                    <Link to="/fixtures">
-                        <button className="mainButton">Previous matches</button>
-                    </Link>
-                    <Link to="/myteam">
-                        <button className="mainButton">Your team</button>
-                    </Link>
-                    <Link to="/createplayer">
-                        <button className="mainButton">Create a player</button>
-                    </Link>
-                </nav>
+                        <Link to="/fixtures">
+                        <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="large"
+                        fullWidth={true}
+                        >
+                            Upcoming matches
+                        </Button>
+                        </Link>
+
+                        <Link to="/fixtures">
+                        <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="large"
+                        fullWidth={true}
+                        >
+                            Previous matches
+                        </Button>
+                        </Link>
+
+                        <Link to="/myteam">
+                        <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="large"
+                        fullWidth={true}
+                        >
+                            Your team
+                        </Button>
+                        </Link>
+
+                        <Link to="/createplayer">
+                        <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="large"
+                        fullWidth={true}
+                        >
+                            Create a player
+                        </Button>
+                        </Link>
+                    </nav>
                 </div>
             </Container>
         ) : (

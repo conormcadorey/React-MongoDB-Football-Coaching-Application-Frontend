@@ -14,14 +14,20 @@ export default function PauseTimer() {
 
             {isRunning ? (
                 <Button 
-                fullWidth="true" 
-                onClick={() => dispatch(changeTimer())}>
+                fullWidth={true}
+                onClick={() => dispatch(changeTimer())}
+                style={{padding: "1rem"}}
+                size="large"
+                >
                    PAUSE MATCH
                 </Button>
             ) : (
                 <Button 
-                fullWidth="true" 
-                onClick={() => dispatch(changeTimer())}>
+                fullWidth={true}
+                onClick={() => dispatch(changeTimer())}
+                style={{padding: "1rem"}}
+                size="large"
+                >
                     RESUME MATCH
                 </Button>
             )

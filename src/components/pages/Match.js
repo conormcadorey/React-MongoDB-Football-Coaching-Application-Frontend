@@ -46,13 +46,13 @@ export default function Match() {
     /////////////////////////
 
     return (
-        <>
+        <div className="page">
         {OppositionData.map((opp) => (
         <Box key={opp.key}>
         <h1>{isRunning ? ("Match: LIVE"):("Match: LIVE(Paused)")}</h1>
         <div className="matchCard">
             <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
-                <CardContent style={{backgroundColor: "#F4F4F4"}}>
+                <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
                 <Typography align="center" variant="h6" component="h2">
                         {userData.user.team.toUpperCase()} v {opp.value.toUpperCase()}
                     </Typography>
@@ -74,29 +74,44 @@ export default function Match() {
                 </CardContent>
                         {isRunning ? (
                             <>
-                            <Button onClick={() => setMyGoals(myGoals + 1)} size="large" style={{width: "50%"}}>
+                            <Button 
+                            onClick={() => setMyGoals(myGoals + 1)} 
+                            size="large" 
+                            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+                            >
                             <h3>{userData.user.team.toUpperCase()} GOAL</h3>
                             </Button>
-                            <Button onClick={() => setOppGoals(oppGoals + 1)} size="large" style={{width: "50%"}}>
+                            <Button onClick={() => setOppGoals(oppGoals + 1)} 
+                            size="large" 
+                            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+                            >
                                 <h3>{opp.value.toUpperCase()} GOAL</h3>
                             </Button>
                             </>
                         ) : (
                             <>
-                            <Button disabled size="large" style={{width: "50%"}}>
+                            <Button 
+                            disabled 
+                            size="large" 
+                            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+                            >
                             <h3>{userData.user.team.toUpperCase()} GOAL</h3>
                             </Button>
-                            <Button disabled size="large" style={{width: "50%"}}>
+                            <Button 
+                            disabled 
+                            size="large" 
+                            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+                            >
                                 <h3>{opp.value.toUpperCase()} GOAL</h3>
                             </Button>
                             </>
                         )}
                     <PauseTimer/>
-                    <SubmitModal/>                   
+                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={opp.value}/>                   
                 </Card>
         </div>
         </Box>       
          ))}
-        </>
+        </div>
     );
 }

@@ -12,7 +12,7 @@ body {
 }
 
 .mainButton {
-    background-color: #3e5096;
+    background-color: #31333b;
     display: block;
     font-size: 2rem;
     padding: 1rem;
@@ -23,7 +23,7 @@ body {
 }
 
 .mainButton:hover {
-    background-color: #31333b;
+    background-color: #3e5096;
     color: #ffffff;
 }
 
@@ -91,6 +91,7 @@ input[type="submit"] {
     background-color: #3e5096;
     display: flex;
     height: 100%;
+    font-size: 1rem;
 }
 
 @media screen and (max-width: 550px ) {
@@ -134,43 +135,6 @@ input[type="submit"] {
     margin: 1rem;
 }
 
-
-
-/*/////////////////////////////////////////////////// */
-/* form */
-
-/*.form label,
-.form input {
-  display: block;
-}
-.form input {
-  margin-bottom: 1rem;
-}
-.form label {
-  margin-bottom: 0.2rem;
-}
-.form input[type="text"],
-.form input[type="email"],
-.form input[type="password"] {
-  width: 100%;
-  padding: 0.3rem;
-  border: 1px solid #c2c2c2;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  font-size: 1.1rem;
-}
-.form input:focus {
-  border: 1px solid #50a4e9;
-  outline: none;
-}
-.form input[type="submit"] {
-  padding: 0.3rem 0.5rem;
-  background-color: #3e5096;
-  font-size: 1.1rem;
-  color: white;
-}
-*/
-
 .editPlayerInput {
     display: inline-block;
     width: 100%;
@@ -199,4 +163,8 @@ input[type="submit"] {
 
 .registerPlayerForm {
     padding: 1rem;
+}
+
+.matchCard {
+    margin-top: 1rem;
 }

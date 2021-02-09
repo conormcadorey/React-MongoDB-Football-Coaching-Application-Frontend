@@ -37,15 +37,17 @@ export default function EditPlayerDialog(props) {
 
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [changeName, setChangeName] = useState("");
   const [changePosition, setChangePosition] = useState(position);
   const [changeNum, setChangeNum] = useState("");
-
-  const [openDrop, setOpenDrop] = React.useState(false);
+  const [openDrop, setOpenDrop] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setChangeName("");
+    setChangeNum("");
+    setChangePosition(position);
   };
 
   const handleClose = () => {

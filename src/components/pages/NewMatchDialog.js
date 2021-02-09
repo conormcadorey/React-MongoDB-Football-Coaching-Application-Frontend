@@ -4,12 +4,12 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addOpposition } from "./../../redux/oppositionSlice";
 
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -50,17 +50,28 @@ export default function NewMatchDialog(props) {
         setIsHome((prev) => !prev);
       };
 
+    /////////////////////////
+    const useStyles = makeStyles({
+      root: {
+        paddingTop: '1rem',
+        paddingBottom: '1rem',
+      },
+    });
+
+    const classes = useStyles();
+    /////////////////////////
+
     return (
       <>
 
         <Card variant="outlined">
-            <CardActions>
+            <CardActions className={classes.root}>
                 <Typography color="textSecondary">
                     Create a new match
                 </Typography>
             </CardActions>
             <form className="createMatchForm" onSubmit={handleSubmit}>
-            <CardContent style={{backgroundColor: "#F4F4F4"}}>
+            <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
                 <Typography align="center" variant="h5" component="h2">
                    {myTeam}
                 </Typography>
@@ -92,13 +103,15 @@ export default function NewMatchDialog(props) {
             </CardContent>
             <Button 
             size="large" 
-            style={{width: "50%"}}
+            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
             type="submit"
             onClick={handleSubmit}
             >
                 <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
             </Button>
-            <Button size="large" style={{width: "50%"}}>
+            <Button size="large"
+            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+            >
                 <h3>SAVE FOR LATER </h3>
             </Button>
             </form>

@@ -21,7 +21,10 @@ export default function TestTimer() {
         } 
     }, [isRunning]);
 
-    console.log(intervalId);
+    if (intervalId === "100000000"){
+        console.log(intervalId)
+    }
+    //console.log(intervalId);
     //<h1>{seconds}</h1>
 
     //format timer

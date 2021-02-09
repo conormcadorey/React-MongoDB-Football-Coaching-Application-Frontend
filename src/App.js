@@ -12,6 +12,7 @@ import Register from "./components/auth/Register";
 import CreatePlayer from "./components/pages/CreatePlayer";
 import MyFixtures from "./components/pages/Fixtures";
 import EditPlayerDialog from "./components/pages/EditPlayerDialog";
+import MyAccount from "./components/pages/MyAccount";
 
 import UserContext from "./context/UserContext";
 
@@ -61,7 +62,11 @@ export default function App() {
                 setUserData({
                     token,
                     user: userRes.data,
-                });
+                })
+                .then(
+                    console.log("SUCCESS")
+                )
+                .catch( error => console.log("NO USER"));
                 }
         };
         checkLoggedIn(); //call async function here
@@ -84,6 +89,7 @@ export default function App() {
                 <Route path="/match" component={Match} />
                 <Route path="/fixtures" component={MyFixtures} />
                 <Route path="/editplayer/:id" component={EditPlayerDialog}/>
+                <Route path="/myaccount" component={MyAccount}/>
 
                 <Route path="/test" component={Test} />
             </Switch>
