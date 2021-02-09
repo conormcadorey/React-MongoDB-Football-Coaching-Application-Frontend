@@ -40,48 +40,48 @@ export default function Home() {
     const classes = useStyles();
     /////////////////////////
 
-return(
-    <>
-    {userData.user ? (
-        <Container component="main">
-            <div className="page">
-            <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
-                    <Box display="flex" style={{backgroundColor: "#F4F4F4"}}>
-                        <Box flexGrow={1}>
-                            <CardContent>
-                                <Typography variant="h5" component="h2">
-                                    Hello {userData.user.userName}!  
-                                </Typography>
-                                <Typography color="textSecondary" variant="body2" component="p">
-                                    Select from an option below to begin
-                                </Typography>
-                            </CardContent>
+return (
+        <>
+        {userData.user ? (
+            <Container component="main">
+                <div className="page">
+                <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
+                        <Box display="flex" style={{backgroundColor: "#F4F4F4"}}>
+                            <Box flexGrow={1}>
+                                <CardContent>
+                                    <Typography variant="h5" component="h2">
+                                        Hello {userData.user.userName}!  
+                                    </Typography>
+                                    <Typography color="textSecondary" variant="body2" component="p">
+                                        Select from an option below to begin
+                                    </Typography>
+                                </CardContent>
+                            </Box>
+                            <Box p={2}><Avatar src="/broken-image.jpg"/></Box>      
                         </Box>
-                        <Box p={2}><Avatar src="/broken-image.jpg"/></Box>      
-                    </Box>
-             </Card>
+                </Card>
 
-            <nav>
-                <NewMatchDialog/>
-                <br></br>
-                <Link to="/fixtures">
-                    <button className="mainButton">Upcoming matches</button>
-                </Link>
-                <Link to="/fixtures">
-                    <button className="mainButton">Previous matches</button>
-                </Link>
-                <Link to="/myteam">
-                    <button className="mainButton">Your team</button>
-                </Link>
-                <Link to="/createplayer">
-                    <button className="mainButton">Create a player</button>
-                </Link>
-            </nav>
-            </div>
-        </Container>
-    ) : (
-    <RedirectToLogin/>
-    )}
-    </>
+                <nav>
+                    <NewMatchDialog myTeam={userData.user.team}/>
+                    <br></br>
+                    <Link to="/fixtures">
+                        <button className="mainButton">Upcoming matches</button>
+                    </Link>
+                    <Link to="/fixtures">
+                        <button className="mainButton">Previous matches</button>
+                    </Link>
+                    <Link to="/myteam">
+                        <button className="mainButton">Your team</button>
+                    </Link>
+                    <Link to="/createplayer">
+                        <button className="mainButton">Create a player</button>
+                    </Link>
+                </nav>
+                </div>
+            </Container>
+        ) : (
+        <RedirectToLogin/>
+        )}
+        </>
   );
 }

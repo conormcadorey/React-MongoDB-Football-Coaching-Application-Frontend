@@ -18,6 +18,9 @@ import Typography from '@material-ui/core/Typography';
 
 export default function NewMatchDialog(props) {
 
+  //props
+  const { myTeam } = props;
+
   const [isHome, setIsHome] = useState(true);
   const [value, setValue] = useState("");
 
@@ -59,7 +62,7 @@ export default function NewMatchDialog(props) {
             <form className="createMatchForm" onSubmit={handleSubmit}>
             <CardContent style={{backgroundColor: "#F4F4F4"}}>
                 <Typography align="center" variant="h5" component="h2">
-                    My Team
+                   {myTeam}
                 </Typography>
                 <Typography align="center" color="textSecondary">
                     vs

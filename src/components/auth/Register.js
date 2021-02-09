@@ -5,11 +5,7 @@ import Axios from "axios";
 import ErrorNotice from "../Errors";
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
@@ -19,6 +15,7 @@ export default function Register() {
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [userName, setUserName] = useState();
+  const [team, setTeam] = useState();
   const [error, setError] = useState();
 
   //enable context
@@ -33,7 +30,7 @@ export default function Register() {
     //get current form state to add to object
     //use axios to send the newUser object with headers
     try {
-      const newUser = { email, password, passwordCheck, userName };
+      const newUser = { email, password, passwordCheck, userName, team };
       await Axios.post("http://localhost:5000/users/register", newUser);
       //on successful registration, create new user login request using context
       const loginRes = await Axios.post("http://localhost:5000/users/login", {
@@ -57,31 +54,12 @@ export default function Register() {
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
-
-    //Copyright 
-    function Copyright() {
-      return (
-        <Typography variant="body2" color="textSecondary" align="center">
-          {'Copyright © '}
-          <Link color="inherit" href="https://material-ui.com/">
-            Headr
-          </Link>{' '}
-          {new Date().getFullYear()}
-          {'.'}
-        </Typography>
-      );
-    }
   
     const useStyles = makeStyles((theme) => ({
       paper: {
-        marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-      },
-      avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
       },
       form: {
         width: '100%', // Fix IE 11 issue.
@@ -96,14 +74,13 @@ export default function Register() {
 
   return (
     <div className="page">
-      <h2>Register</h2>
+      <div className="pageTitle"><h1>Register</h1></div>
       {/*if error- create an error notice component */}
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
 
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate onSubmit={submit}>
           <TextField
@@ -154,6 +131,17 @@ export default function Register() {
             onChange={(e) => setUserName(e.target.value)}
           />
 
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Your Team"
+            id="register-your-team"
+            type="text"
+            onChange={(e) => setTeam(e.target.value)}
+          />
+
           <Button
             type="submit"
             fullWidth
@@ -166,11 +154,7 @@ export default function Register() {
           </Button>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
-
     </div>  
   );
 }

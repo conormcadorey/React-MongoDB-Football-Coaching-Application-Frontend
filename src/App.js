@@ -11,6 +11,7 @@ import Match from "./components/pages/Match";
 import Register from "./components/auth/Register";
 import CreatePlayer from "./components/pages/CreatePlayer";
 import MyFixtures from "./components/pages/Fixtures";
+import EditPlayerDialog from "./components/pages/EditPlayerDialog";
 
 import UserContext from "./context/UserContext";
 
@@ -82,6 +83,7 @@ export default function App() {
                 <Route path="/myteam" component={MyTeam} />
                 <Route path="/match" component={Match} />
                 <Route path="/fixtures" component={MyFixtures} />
+                <Route path="/editplayer/:id" component={EditPlayerDialog}/>
 
                 <Route path="/test" component={Test} />
             </Switch>

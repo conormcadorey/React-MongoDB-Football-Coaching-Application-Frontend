@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from "axios";
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -12,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function EditPlayerDialog(props) {
 
   //props
-  const { name } = props;
+  const { name, id, onUpdate } = props;
 
   const [open, setOpen] = React.useState(false);
 
@@ -23,6 +25,27 @@ export default function EditPlayerDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  let token = localStorage.getItem("auth-token");
+  const url = "http://localhost:5000/players";
+
+  const deletePlayer = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`${url}/delete/${id}`, {
+        headers: {
+            "Authorization": token,
+        }
+      })
+      .then(res => {
+        console.log("player deleted")
+        onUpdate();
+        setOpen(false)
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
@@ -36,6 +59,7 @@ export default function EditPlayerDialog(props) {
             <Typography variant="body2" color="textSecondary">
                 Permanently delete this player? You cannot undo this action!
             </Typography>
+            <form onSubmit={deletePlayer}>
             <div className="deletePlayerButton">
                 <Button
                     type="submit"
@@ -47,6 +71,7 @@ export default function EditPlayerDialog(props) {
                         Delete 
                 </Button>
             </div>
+            </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
