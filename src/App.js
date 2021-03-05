@@ -22,7 +22,6 @@ import "./styles.css";
 
 export default function App() {
 
-    //set default state 
     const [userData, setUserData] = useState({
         token: undefined,
         user: undefined,
@@ -30,16 +29,12 @@ export default function App() {
 
     //run this effect when the app starts up
     //it checks the browser for an existing jwttoken from a previous session 
-    //the token can keep track of the logged in users data 
-    //useState makes the token data globally accessible 
     useEffect(() => {
-        //cant use async with useEffect
-        //instead define a seperate async function inside useEffect and call it 
+        checkLoggedIn(); 
+    }, []); 
 
-        //function to check if a user token already exists from previous session in local storage 
         const checkLoggedIn = async () => {
             let token = localStorage.getItem("auth-token");
-            //check if token is null
             //set token to an empty string if null
                 if (token === null) {
                 localStorage.setItem("auth-token", ""); 
@@ -54,10 +49,8 @@ export default function App() {
                 );
                 //if tokenIsValid true 
                 if (tokenRes.data) {
-                    //get the user data that belongs to the token 
                     const userRes = await Axios.get("http://localhost:5000/users/", 
                     {headers: {"x-auth-token": token },});
-                //set user data inside the useState const
                 //state is now globally accessible thru UserContext.Provider
                 setUserData({
                     token,
@@ -69,11 +62,7 @@ export default function App() {
                 .catch( error => console.log("NO USER"));
                 }
         };
-        checkLoggedIn(); //call async function here
-    }, []); //empty dependency array, so useEffect only runs once (on start)
-
-    //react-router helps map specific URL paths to different components 
-    //UserContext passes application state to all components inside it 
+       
     return ( 
      <> 
         <Router>
@@ -89,7 +78,7 @@ export default function App() {
                 <Route path="/match" component={Match} />
                 <Route path="/fixtures" component={MyFixtures} />
                 <Route path="/editplayer/:id" component={EditPlayerDialog}/>
-                <Route path="/myaccount" component={MyAccount}/>
+                <Route path="/myaccount" component={MyAccount} />
 
                 <Route path="/test" component={Test} />
             </Switch>

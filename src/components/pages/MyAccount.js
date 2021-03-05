@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 import UserContext from "../../context/UserContext";
 import RedirectLogin from "./RedirectLogin";
+import ChangePassword from "./ChangePassword";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -9,14 +11,33 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 
 export default function MyAccount() {
 
     const {userData} = useContext(UserContext)
     const [name, setName] = useState("");
 
-    const submitName = () => {
-        console.log("")
+    const id = userData.user.id;
+
+    let token = localStorage.getItem("auth-token");
+    const url = "http://localhost:5000/users";
+
+    const submitName = async (e) => {
+        e.preventDefault();
+        try{
+            await axios.put(`${url}/editname/${id}`, { userName: name }, {
+                headers: {
+                    "Authorization": token,
+                }
+            })
+            .then(res => {
+                setName(res.data)
+                //onUpdate();
+            })
+        } catch (err) {
+            console.log(err);
+        }   
     }
 
     const useStyles = makeStyles((theme) => ({
@@ -35,6 +56,10 @@ export default function MyAccount() {
         submit: {
             margin: theme.spacing(3, 0, 2),
           },
+          header: {
+              display: 'flex',
+              alignItems: 'center',
+          }
       }));
 
     const classes = useStyles();
@@ -44,11 +69,11 @@ export default function MyAccount() {
         {userData.user ? (
             <Container component="main" maxWidth="xs">
             <div className="page">
-                <Box display="flex">
+                <Box className={classes.header}>
                     <Box flexGrow={1}>
-                        <div className="pageTitle"><h1>My account</h1></div>
+                        <div className="pageTitle"><h1>My account</h1></div> 
                     </Box>
-                    <Box>
+                    <Box display="flex">
                         <Avatar src="/broken-image.jpg" style={{ height: '70px', width: '70px' }}/>
                     </Box>
                 </Box>
@@ -56,7 +81,7 @@ export default function MyAccount() {
                 You can modify your personal information from this page. 
             </Typography>
             <br></br>
-            <hr></hr>
+            <Divider/>
             <form className={classes.form} noValidate onSubmit={submitName}>
             <Typography variant="body2" color="textSecondary">
               Your name
@@ -68,20 +93,34 @@ export default function MyAccount() {
               fullWidth
               id="change-name"
               type="text"
-              label="Name"
+              defaultValue={userData.user.userName}
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disableElevation
-            >
-              Save
-            </Button>
+            {name ? (
+                <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disableElevation
+              >
+                Save
+              </Button>
+            ) : (
+                <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disableElevation
+                disabled
+                >
+                Save
+                </Button>
+            )}
             </form>
 
             <Button 
@@ -108,6 +147,7 @@ export default function MyAccount() {
                 >
                     Change team
             </Button>
+            <ChangePassword/>
             </div>
             </Container>
         ) : (

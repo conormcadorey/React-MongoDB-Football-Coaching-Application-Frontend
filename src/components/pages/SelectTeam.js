@@ -1,11 +1,10 @@
-//601edd8f44e95d671318b812
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-export default function Test() {
+export default function SelectTeam() {
 
     const [teams, setTeams] = useState([]);
 
@@ -23,12 +22,12 @@ export default function Test() {
 
     return (
         <>
-            <h1>Test</h1>
             <Autocomplete
             id="combo-box-demo"
             options={teams}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Select a team" variant="outlined" />}
+            onChange={(e) => props.onChange(e.target.value)}
+            style={{/* width: 300*/}}
+            renderInput={(params) => <TextField {...params} label="Your team*" variant="outlined" />}
             /> 
         </>
     );

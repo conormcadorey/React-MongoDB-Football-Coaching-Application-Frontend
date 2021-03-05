@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import Axios from "axios";
@@ -8,9 +8,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function Register() {
-  //state
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
@@ -18,39 +19,41 @@ export default function Register() {
   const [team, setTeam] = useState();
   const [error, setError] = useState();
 
-  //enable context
-  //destructure setUserData 
   const { setUserData } = useContext(UserContext);
-  //enable history
   const history = useHistory();
+
+  const [teams, setTeams] = useState([]);
+
+    useEffect(() => {
+        getTeams();
+    }, []);
+
+    const getTeams = async () => {
+        await Axios.get("http://localhost:5000/users/allteams")
+            .then((res) => {
+                setTeams(res.data)
+            })
+            .catch( error => console.log(error));
+    }
 
   //submit form function
   const submit = async (e) => {
-    e.preventDefault(); //prevent reload 
-    //get current form state to add to object
-    //use axios to send the newUser object with headers
+    e.preventDefault(); 
     try {
       const newUser = { email, password, passwordCheck, userName, team };
       await Axios.post("http://localhost:5000/users/register", newUser);
-      //on successful registration, create new user login request using context
       const loginRes = await Axios.post("http://localhost:5000/users/login", {
         email,
         password,
       });
-      //response returns token/user data
-      //add data to context
+
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
       });
-      //add token to local storage
       localStorage.setItem("auth-token", loginRes.data.token);
-      //redirect new user to homepage 
       history.push("/");
     } catch (err) {
-      //if error exists, set error state
-      //only executes if both statements true
-      //ie if err msg is undefined = false 
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
@@ -131,16 +134,19 @@ export default function Register() {
             onChange={(e) => setUserName(e.target.value)}
           />
 
-          <TextField
+          <Autocomplete
+            style={{ marginTop: '1rem'}}
+            id="register-your-team"
+            options={teams}
+            onChange={(event, value) => setTeam(value)}
+            onInputChange={(event, value) => setTeam(value)}
+            renderInput={(params) => <TextField {...params} label="Your team*" variant="outlined" />}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             label="Your Team"
-            id="register-your-team"
-            type="text"
-            onChange={(e) => setTeam(e.target.value)}
-          />
+          /> 
 
           <Button
             type="submit"
@@ -152,6 +158,7 @@ export default function Register() {
           >
             Register with Headr
           </Button>
+
         </form>
       </div>
     </Container>

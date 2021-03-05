@@ -23,8 +23,8 @@ export default function EditPlayerDialog(props) {
     setOpen(false);
   };
 
-  let token = localStorage.getItem("auth-token");
-  const url = "http://localhost:5000/players";
+  //let token = localStorage.getItem("auth-token");
+  //const url = "http://localhost:5000/players";
 
   const saveMatch = async (e) => {
     e.preventDefault();
