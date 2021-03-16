@@ -49,19 +49,19 @@ export default function DisplayTeam(props) {
         getPlayers();
     }
 
-      const useStyles = makeStyles((theme) => ({
-        root: {
-          minWidth: 275,
+    const useStyles = makeStyles((theme) => ({
+    root: {
+        minWidth: 275,
+    },
+    pos: {
+        marginBottom: 18,
+    },
+    formControl: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        minWidth: 120,
         },
-        pos: {
-          marginBottom: 18,
-        },
-        formControl: {
-            marginTop: theme.spacing(2),
-            marginBottom: theme.spacing(2),
-            minWidth: 120,
-          },
-      }));
+    }));
 
     const classes = useStyles();
 
