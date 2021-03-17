@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-//import axios from "axios";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,8 +13,12 @@ export default function EditPlayerDialog(props) {
 
   //props
   const { myGoals, oppGoals, myTeam, oppTeam } = props;
+  const homeAway = true;
+  const complete = "Y";
+  const duration = "90";
 
   const [open, setOpen] = useState(false);
+  const history = useHistory();
 
   const handleOpen = () => {
     setOpen(true);
@@ -23,24 +28,20 @@ export default function EditPlayerDialog(props) {
     setOpen(false);
   };
 
-  //let token = localStorage.getItem("auth-token");
-  //const url = "http://localhost:5000/players";
+  let token = localStorage.getItem("auth-token");
+  const url = "http://localhost:5000/match";
 
   const saveMatch = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     try {
-      /*
-      await axios.delete(`${url}/delete/${id}`, {
+      const newMatch = { myTeam, oppTeam, myGoals, oppGoals, homeAway, complete, duration };
+
+      await axios.post(`${url}/submitmatch`, newMatch, {
         headers: {
-            "Authorization": token,
+            "Authorization": token
         }
-      })
-      .then(res => {
-        console.log("player deleted")
-        onUpdate();
-        setOpen(false)
-      })
-      */
+    })
+      history.push("/");
     } catch (err) {
       console.log(err)
     }

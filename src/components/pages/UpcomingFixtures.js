@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function UpcomingFixtures() {
@@ -35,12 +34,7 @@ const useStyles = makeStyles((theme) => ({
     pos: {
         marginBottom: 18,
     },
-    formControl: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-        minWidth: 120,
-        },
-    }));
+}));
 
     const classes = useStyles();
 
@@ -50,7 +44,7 @@ return (
 
         {matches ? 
             (matches.map(match => {
-                const { myTeam, oppTeam, myGoals, oppGoals, homeAway, complete, duration, _id } = match || {};
+                const { myTeam, oppTeam, myGoals, oppGoals, homeAway, complete, duration, createdAt } = match || {};
                 return (
                     <>
                     {complete === "Y" ? (       
@@ -58,26 +52,35 @@ return (
                         {homeAway ? (
                             <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
                                 <CardContent pt={1} style={{backgroundColor: "#F4F4F4"}}>
-                                    <Typography align="center" variant="h4" component="h2">
+                                    <Typography align="center" variant="h5" component="h2">
                                         {myTeam} v {oppTeam}
                                     </Typography>  
+                                    <Typography align="center" variant="body2" component="p">
+                                        {duration} | {moment(createdAt).format("DD/MM/YYYY")}
+                                    </Typography>
                                 </CardContent>
-                                <CardActions>
-                                <Typography color="textSecondary">
-                                    {myGoals} | {oppGoals}
-                                </Typography>
-                                <Typography variant="body2" component="p">
-                                    {duration}
-                                    <br />
-                                </Typography>
-                                </CardActions>
+                                <CardContent pt={1} style={{backgroundColor: "#FFFFFF"}}>
+                                    <Typography align="center" variant="h4" color="textSecondary">
+                                        {myGoals} | {oppGoals}
+                                    </Typography>
+                                </CardContent>
                             </Card>
                         ) : (
-                            <span>
-                            <h1>{oppTeam} v {myTeam}</h1>
-                            <p>{oppGoals} | {myGoals}</p>
-                            <p>{duration}</p>
-                            </span>
+                            <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
+                                <CardContent pt={1} style={{backgroundColor: "#F4F4F4"}}>
+                                    <Typography align="center" variant="h5" component="h2">
+                                        {oppTeam} v {myTeam}
+                                    </Typography>  
+                                    <Typography align="center" variant="body2" component="p">
+                                        {duration} | {moment(createdAt).format("DD/MM/YYYY")}
+                                    </Typography>
+                                </CardContent>
+                                <CardContent pt={1} style={{backgroundColor: "#FFFFFF"}}>
+                                    <Typography align="center" variant="h4" color="textSecondary">
+                                        {oppGoals} | {myGoals}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
                         )}
                         </>
                     ) : (
