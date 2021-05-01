@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import DeleteMatchDialog from "./DeleteMatchDialog";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
 
-export default function UpcomingFixtures() {
+export default function PreviousFixtures() {
 
 const [matches, setMatches] = useState([]);
 
@@ -43,18 +40,14 @@ const useStyles = makeStyles((theme) => ({
 
 return (
     <>
-    <div className="pageTitle"><h1>Upcoming fixtures</h1></div>
-    <Typography variant="body2">
-        Below, are all of your upcoming saved fixtures. Just select from a fixture to begin a new match instantly! 
-        <br></br><br></br>
-    </Typography>
+    <div className="pageTitle"><h1>Previous fixtures</h1></div>
 
         {matches ? 
             (matches.map(match => {
-                const { myTeam, oppTeam, homeAway, complete, createdAt, _id } = match || {};
+                const { myTeam, oppTeam, myGoals, oppGoals, homeAway, complete, duration, createdAt } = match || {};
                 return (
                     <>
-                    {complete === "N" ? (       
+                    {complete === "Y" ? (       
                         <>
                         {homeAway ? (
                             <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
@@ -63,22 +56,14 @@ return (
                                         {myTeam} v {oppTeam}
                                     </Typography>  
                                     <Typography align="center" variant="body2" component="p">
-                                        Match saved: {moment(createdAt).format("DD/MM/YYYY")}
+                                        {duration} | {moment(createdAt).format("DD/MM/YYYY")}
                                     </Typography>
                                 </CardContent>
-                                <Button 
-                                    size="large" 
-                                    style={{width: "80%", paddingTop: "1.3rem", paddingBottom: "1.3rem"}}
-                                    type="submit"
-                                >
-                                    <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
-                                </Button>
-                                <Button size="large"
-                                    style={{width: "20%", paddingTop: "1rem", paddingBottom: "1rem"}}
-                                    type="submit"
-                                >
-                                    <DeleteMatchDialog myTeam={myTeam} oppTeam={oppTeam} id={_id} />
-                                </Button>
+                                <CardContent pt={1} style={{backgroundColor: "#FFFFFF"}}>
+                                    <Typography align="center" variant="h4" color="textSecondary">
+                                        {myGoals} | {oppGoals}
+                                    </Typography>
+                                </CardContent>
                             </Card>
                         ) : (
                             <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
@@ -87,22 +72,14 @@ return (
                                         {oppTeam} v {myTeam}
                                     </Typography>  
                                     <Typography align="center" variant="body2" component="p">
-                                        Match saved: {moment(createdAt).format("DD/MM/YYYY")}
+                                        {duration} | {moment(createdAt).format("DD/MM/YYYY")}
                                     </Typography>
                                 </CardContent>
-                                <Button 
-                                    size="large" 
-                                    style={{width: "80%", paddingTop: "1.3rem", paddingBottom: "1.3rem"}}
-                                    type="submit"
-                                >
-                                    <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
-                                </Button>
-                                <Button size="large"
-                                    style={{width: "20%", paddingTop: "1rem", paddingBottom: "1rem"}}
-                                    type="submit"
-                                >
-                                    <DeleteMatchDialog/>
-                                </Button>
+                                <CardContent pt={1} style={{backgroundColor: "#FFFFFF"}}>
+                                    <Typography align="center" variant="h4" color="textSecondary">
+                                        {oppGoals} | {myGoals}
+                                    </Typography>
+                                </CardContent>
                             </Card>
                         )}
                         </>

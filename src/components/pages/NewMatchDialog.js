@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 
 import { useDispatch } from "react-redux";
 import { addOpposition } from "./../../redux/oppositionSlice";
@@ -21,34 +22,58 @@ export default function NewMatchDialog(props) {
   //props
   const { myTeam } = props;
 
-  const [isHome, setIsHome] = useState(true);
-  const [value, setValue] = useState("");
+  const [homeAway, setIsHome] = useState(true);
+  const [oppTeam, setOppTeam] = useState("");
+  const complete = "N";
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setOppTeam(e.target.value);
   }
 
+  //start new match dialog 
   const handleSubmit = (e) => {
-    if (!value) {
+    if (!oppTeam) {
       alert("Please enter an opposition team!");
     } else {
     e.preventDefault();
     //dispatch hook takes in an action
     //action is passed as first param (addTodo())
     //define payload value using 'value' var
-    dispatch(addOpposition(value));
-    //setValue(""); //reset empty text-input 
-    //redirect user to homepage 
+    dispatch(addOpposition(oppTeam));
     history.push("/match");
     }
   };
 
-    const toggleChecked = () => {
-        setIsHome((prev) => !prev);
-      };
+  let token = localStorage.getItem("auth-token");
+  const url = "http://localhost:5000/match";
+
+  //save match to upcoming fixtures
+  const handleSave = async (e) => {
+    e.preventDefault();
+    if (!oppTeam) {
+      alert("Please enter an opposition team!");
+    } else {
+      try {
+        const newMatch = { myTeam, oppTeam, homeAway, complete };
+        await axios.post(`${url}/saveforlater`, newMatch, {
+          headers: {
+              "Authorization": token
+          }
+      })
+        history.push("/savedfixtures");
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
+  //set match as home/away
+  const toggleChecked = () => {
+      setIsHome((prev) => !prev);
+    };
 
     /////////////////////////
     const useStyles = makeStyles({
@@ -87,14 +112,14 @@ export default function NewMatchDialog(props) {
                     label="Opposition team"
                     id="opposition-team-name"
                     type="text"
-                    value={value} 
+                    value={oppTeam} 
                     onChange={handleChange}
                     />
                 <FormControl component="fieldset">
                     <FormGroup aria-label="position" row>
                         <FormControlLabel
-                        control={<Switch checked={isHome} onChange={toggleChecked} color="primary" />}
-                        label={isHome? ("Home") : ("Away")}
+                        control={<Switch checked={homeAway} onChange={toggleChecked} color="primary" />}
+                        label={homeAway? ("Home") : ("Away")}
                         labelPlacement="end"
                         />
                     </FormGroup>
@@ -111,6 +136,8 @@ export default function NewMatchDialog(props) {
             </Button>
             <Button size="large"
             style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+            type="submit"
+            onClick={handleSave}
             >
                 <h3>SAVE FOR LATER </h3>
             </Button>

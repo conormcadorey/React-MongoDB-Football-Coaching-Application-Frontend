@@ -1,24 +1,14 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const oppositionSlice = createSlice({
     name: "opposition",
     initialState: {
-        oppositionName: [],
+        oppositionName: "",
     },
     reducers: {
         addOpposition: { 
             reducer: (state, action) => {
-            state.oppositionName.push(action.payload);
-        },
-        //nanoID generates a random id as they array item key
-        //the payload is then pushed to the state in the above reducer
-        prepare(value) {
-            return {
-                payload: {
-                    key: nanoid(),
-                    value: value,
-                },
-            };
+            state.oppositionName = action.payload;
         },
     },
 },

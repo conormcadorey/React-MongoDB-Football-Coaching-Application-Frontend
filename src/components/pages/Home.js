@@ -26,8 +26,6 @@ export default function Home() {
     });
     */
 
-    //useEffect to clear oppTeam when match ends or match live = false
-
     const useStyles = makeStyles({
         root: {
           //minWidth: 275,
@@ -71,7 +69,7 @@ return (
                 <nav>
                     <NewMatchDialog myTeam={userData.user.team}/>
                     <br></br>
-                        <Link to="/fixtures">
+                        <Link to="/savedfixtures">
                         <Button 
                         className={classes.button}
                         variant="outlined"          

@@ -90,7 +90,7 @@ export default function CreatePlayer() {
         <div className={classes.paper}>
           <form className={classes.form} noValidate onSubmit={submit}>
             <Typography variant="body2">
-              Registering your new player is easy! All you need for now is their name. Change a players details at any time by &nbsp;
+              Registering your players is easy! All you need for now is their name. Change a players details at any time by &nbsp;
               <Link to="/myteam" style={{color: "#323a5a"}}>
                   clicking here.
               </Link> 

@@ -10,6 +10,7 @@ import MyTeam from "./components/pages/MyTeam";
 import Match from "./components/pages/Match";
 import Register from "./components/auth/Register";
 import CreatePlayer from "./components/pages/CreatePlayer";
+import SavedFixtures from "./components/pages/SavedFixtures";
 import MyFixtures from "./components/pages/Fixtures";
 import EditPlayerDialog from "./components/pages/EditPlayerDialog";
 import MyAccount from "./components/pages/MyAccount";
@@ -77,6 +78,7 @@ export default function App() {
                 <Route path="/myteam" component={MyTeam} />
                 <Route path="/match" component={Match} />
                 <Route path="/fixtures" component={MyFixtures} />
+                <Route path="/savedfixtures" component={SavedFixtures} />
                 <Route path="/editplayer/:id" component={EditPlayerDialog}/>
                 <Route path="/myaccount" component={MyAccount} />
 

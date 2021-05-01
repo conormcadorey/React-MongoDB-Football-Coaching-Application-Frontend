@@ -42,7 +42,8 @@ export default function Login() {
       //redirect user to homepage 
       history.push("/");
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
+      //err.response.data.msg && setError(err.response.data.msg);
+      console.log("error");
     }
   };
 

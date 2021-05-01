@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
 
 import RedirectToLogin from "./RedirectLogin";
-import PreviousFixtures from "./PreviousFixtures";
+import UpcomingFixtures from "./UpcomingFixtures";
 
-export default function MyFixtures() {
+export default function SavedFixtures() {
 
 const {userData} = useContext(UserContext);
 
@@ -12,7 +12,7 @@ const {userData} = useContext(UserContext);
 return (
         <div className="page">
             {userData.user ? (
-                <PreviousFixtures />
+                <UpcomingFixtures />
             ) : (
                 <RedirectToLogin />
             )}

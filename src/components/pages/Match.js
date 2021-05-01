@@ -12,12 +12,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box } from "@material-ui/core";
 
 export default function Match() {
 
     //oppopsition team info from redux 
-    const OppositionData = useSelector(
+    const oppositionData = useSelector(
         (state) => state.opposition.oppositionName
     );
 
@@ -47,14 +46,12 @@ export default function Match() {
 
     return (
         <div className="page">
-        {OppositionData.map((opp) => (
-        <Box key={opp.key}>
         <h1>{isRunning ? ("Match: LIVE"):("Match: LIVE(Paused)")}</h1>
         <div className="matchCard">
             <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
                 <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
                 <Typography align="center" variant="h6" component="h2">
-                        {userData.user.team.toUpperCase()} v {opp.value.toUpperCase()}
+                        {userData.user.team.toUpperCase()} v {oppositionData.toUpperCase()}
                     </Typography>
                     <Typography align="center" variant="h1" color="textSecondary">
                         {myGoals} - {oppGoals}
@@ -85,7 +82,7 @@ export default function Match() {
                             size="large" 
                             style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
                             >
-                                <h3>{opp.value.toUpperCase()} GOAL</h3>
+                                <h3>{oppositionData.toUpperCase()} GOAL</h3>
                             </Button>
                             </>
                         ) : (
@@ -102,16 +99,14 @@ export default function Match() {
                             size="large" 
                             style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
                             >
-                                <h3>{opp.value.toUpperCase()} GOAL</h3>
+                                <h3>{oppositionData.toUpperCase()} GOAL</h3>
                             </Button>
                             </>
                         )}
                     <PauseTimer/>
-                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={opp.value}/>                   
+                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={oppositionData}/>                   
                 </Card>
         </div>
-        </Box>       
-         ))}
         </div>
     );
 }
