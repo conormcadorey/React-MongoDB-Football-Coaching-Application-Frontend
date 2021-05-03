@@ -14,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function DeleteMatchDialog(props) {
 
   //props
-  //const { name, id, onUpdate } = props;
+  const { id, onUpdate } = props;
 
   const [open, setOpen] = React.useState(false);
 
@@ -31,7 +31,6 @@ export default function DeleteMatchDialog(props) {
 
   const deleteMatch = async (e) => {
     e.preventDefault();
-    /*
     try {
       await axios.delete(`${url}/delete/${id}`, {
         headers: {
@@ -39,14 +38,13 @@ export default function DeleteMatchDialog(props) {
         }
       })
       .then(res => {
-        console.log("player deleted")
+        console.log("Match deleted")
         onUpdate();
         setOpen(false)
       })
     } catch (err) {
       console.log(err)
     }
-    */
   }
 
   return (
