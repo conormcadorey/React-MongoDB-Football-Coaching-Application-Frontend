@@ -67,6 +67,7 @@ export default function EditPlayerDialog(props) {
                     variant="contained"
                     color="primary"
                     disableElevation
+                    fullWidth
                     >
                         Delete 
                 </Button>

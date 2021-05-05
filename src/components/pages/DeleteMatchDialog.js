@@ -67,6 +67,8 @@ export default function DeleteMatchDialog(props) {
                     variant="contained"
                     color="primary"
                     disableElevation
+                    style={{marginTop: "2rem"}}
+                    fullWidth
                     >
                         Delete 
                 </Button>

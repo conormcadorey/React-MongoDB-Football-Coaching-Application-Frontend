@@ -84,6 +84,9 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <Typography variant="body2">
+          Created by youth coaches, for youth coaches 
+        </Typography>
         <form className={classes.form} noValidate onSubmit={submit}>
           <TextField
             variant="outlined"
@@ -112,6 +115,7 @@ export default function Login() {
           />
 
           <Button
+            size="large"
             type="submit"
             fullWidth
             variant="contained"

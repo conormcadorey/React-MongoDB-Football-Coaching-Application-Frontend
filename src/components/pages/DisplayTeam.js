@@ -113,7 +113,7 @@ export default function DisplayTeam(props) {
                                                 </>
                                             ) : (
                                                 <>
-                                                <Tooltip title="Cannot edit this player" arrow>
+                                                <Tooltip title="Cannot edit this player. Update your Admin privileges" arrow>
                                                 <span>
                                                     <Button 
                                                     disabled
@@ -124,7 +124,7 @@ export default function DisplayTeam(props) {
                                                 </span>
                                                 </Tooltip>
                 
-                                                <Tooltip title="Cannot delete this player" arrow>
+                                                <Tooltip title="Cannot delete this player. Update your Admin privileges" arrow>
                                                 <span>
                                                     <Button disabled size="large">
                                                         <DeleteIcon/>
