@@ -14,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function DeleteMatchDialog(props) {
 
   //props
-  const { id, onUpdate } = props;
+  const { id, onUpdate, opposition } = props;
 
   const [open, setOpen] = React.useState(false);
 
@@ -54,7 +54,7 @@ export default function DeleteMatchDialog(props) {
      </Tooltip> 
 
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle><h2>Delete match?</h2></DialogTitle>
+        <DialogTitle><h2>Delete match v {opposition}?</h2></DialogTitle>
         <DialogContent align="center">
             <Typography variant="body2" color="textSecondary">
                 Permanently delete this match? You cannot undo this action!

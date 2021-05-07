@@ -12,7 +12,7 @@ const {userData} = useContext(UserContext);
 return (
         <div className="page">
             {userData.user ? (
-                <UpcomingFixtures />
+                <UpcomingFixtures team={userData.user.team} />
             ) : (
                 <RedirectToLogin />
             )}

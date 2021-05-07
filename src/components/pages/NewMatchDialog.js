@@ -39,7 +39,6 @@ export default function NewMatchDialog(props) {
       alert("Please enter an opposition team!");
     } else {
     e.preventDefault();
-    //dispatch hook takes in an action
     //action is passed as first param (addTodo())
     //define payload value using 'value' var
     dispatch(addOpposition(oppTeam));
@@ -114,6 +113,7 @@ export default function NewMatchDialog(props) {
                     type="text"
                     value={oppTeam} 
                     onChange={handleChange}
+                    inputProps={{style: {textTransform: "capitalize"}}}
                     />
                 <FormControl component="fieldset">
                     <FormGroup aria-label="position" row>
