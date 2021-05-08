@@ -32,13 +32,10 @@ const dispatch = useDispatch();
 const url = "http://localhost:5000/match";
 const history = useHistory();
 
-//let token = localStorage.getItem("auth-token");
-
 useEffect(() => {
     upcomingMatches();
 }, [])
 
-//get all upcoming matches
 const upcomingMatches = async () => {
     try {
         await axios
@@ -53,11 +50,9 @@ const upcomingMatches = async () => {
     }
 }
 
-//initialise new match with saved data
 const handleClick = () => {
     history.push("/match");
 };
-
 
 const handleUpdate = () => {
     upcomingMatches();

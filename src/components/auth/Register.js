@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import axios from "axios";
 
 export default function Register() {
 
@@ -25,16 +26,23 @@ export default function Register() {
   const [teams, setTeams] = useState([]);
 
     useEffect(() => {
-        getTeams();
-    }, []);
-
-    const getTeams = async () => {
-        await Axios.get("http://localhost:5000/users/allteams")
+      let cancel
+      const getTeams = async () => {
+        await Axios.get("http://localhost:5000/users/allteams", {
+        cancelToken: new axios.CancelToken(c => cancel = c)
+       })
             .then((res) => {
                 setTeams(res.data)
             })
-            .catch( error => console.log(error));
+            .catch( error => {
+              console.log(error)
+              //stop logging any cancel requests as an error as the cancellation is intentional
+              if (axios.isCancel(error)) return
+            });
     }
+    getTeams();
+    return () => cancel()
+    }, []);
 
   //submit form function
   const submit = async (e) => {
@@ -78,7 +86,6 @@ export default function Register() {
   return (
     <div className="page">
       <div className="pageTitle"><h1>Register</h1></div>
-      {/*if error- create an error notice component */}
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
@@ -135,6 +142,8 @@ export default function Register() {
           />
 
           <Autocomplete
+            freeSolo //allow custom user inputs
+            autoSelect //retain value after input looses focus 
             style={{ marginTop: '1rem'}}
             id="register-your-team"
             options={teams}
@@ -150,6 +159,7 @@ export default function Register() {
 
           <Button
             type="submit"
+            size="large"
             fullWidth
             variant="contained"
             color="primary"
