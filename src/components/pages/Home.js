@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
+import Fade from 'react-reveal/Fade';
+
 export default function Home() {
 
     const {userData} = useContext(UserContext);
@@ -67,7 +69,9 @@ return (
                 </Card>
 
                 <nav>
+                    <Fade left big>
                     <NewMatchDialog myTeam={userData.user.team}/>
+                    </Fade>
                     <br></br>
                         <Link to="/savedfixtures">
                         <Button 

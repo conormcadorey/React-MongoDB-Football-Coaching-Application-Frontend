@@ -38,7 +38,6 @@ export default function EditPlayerDialog(props) {
         }
       })
       .then(res => {
-        console.log("player deleted")
         onUpdate();
         setOpen(false)
       })

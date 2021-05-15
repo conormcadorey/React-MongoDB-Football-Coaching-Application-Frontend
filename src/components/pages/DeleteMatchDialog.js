@@ -14,7 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function DeleteMatchDialog(props) {
 
   //props
-  const { id, onUpdate, opposition } = props;
+  const { id, opposition, handleUpdate } = props;
 
   const [open, setOpen] = React.useState(false);
 
@@ -38,8 +38,7 @@ export default function DeleteMatchDialog(props) {
         }
       })
       .then(res => {
-        console.log("Match deleted")
-        onUpdate();
+        handleUpdate(id);
         setOpen(false)
       })
     } catch (err) {

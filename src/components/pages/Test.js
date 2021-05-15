@@ -17,12 +17,15 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
+import Zoom from 'react-reveal/Zoom';
+
 export default function UpcomingFixtures(props) {
 
 const [matches, setMatches] = useState([])
 const [pageNumber, setPageNumber] = useState(1)
 const [loading, setLoading] = useState(true)
 const [loadMoreData, setLoadMoreData] = useState(false)
+const [update, setUpdate] = useState(false)
 const { team } = props;
 
 //redux
@@ -38,18 +41,22 @@ let num = 1;
 
 const upcomingMatches = async(pageNumber) => {
     setLoading(true)
-    const res = await axios
-    .get(`${url}/paginate/Ballymena?page=${pageNumber}&limit=2`)
-    .then( res => {
-        setMatches(p => [...p, ...res.data.results])
-        setLoading(false)
-        setLoadMoreData(true)
-    });
+    try {
+        await axios
+        .get(`${url}/paginate/${team}?page=${pageNumber}&limit=5`)
+        .then( res => {
+            setMatches(p => [...p, ...res.data.results])
+            setLoading(false)
+            setLoadMoreData(true)
+        });
+    } catch(err) {
+        console.error(err);
+    }
 };
 
 useEffect(() => {
     upcomingMatches(pageNumber);
-},[pageNumber])
+},[pageNumber, update])
 
 const loadMore = () => {
     setPageNumber(prevPageNumber => prevPageNumber + 1)
@@ -77,7 +84,7 @@ const handleClick = () => {
 };
 
 const handleUpdate = () => {
-    upcomingMatches();
+    setUpdate(() => !update);
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -91,65 +98,91 @@ const useStyles = makeStyles((theme) => ({
 
     const classes = useStyles();
 
-  return (
-    <div >
+    return (
+    <>
+    <div className="pageTitle"><h1>Upcoming fixtures</h1></div>
+    <Typography variant="body2">
+        Below, are all of your upcoming saved fixtures. Just select from a fixture to begin a new match instantly! 
+        <br></br><br></br>
+    </Typography>
+    {matches.length > 0 ? (
+        <>
         {matches.map(match => {
-                    const { myTeam, opposition, homeAway, createdAt, _id } = match || {};
-                        return (
-                            
-                            <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
-                        <CardContent pt={1} style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
-                            {homeAway ? (
-                            <Typography align="center" variant="h5" component="h2">
-                                {myTeam} v {opposition}
-                            </Typography>  
-                            ) : (
-                            <Typography align="center" variant="h5" component="h2">
-                                    {opposition} v {myTeam}
-                            </Typography>  
-                            )}
-                            <Typography align="center" variant="body2" component="p">
-                                Match saved: {moment(createdAt).format("DD/MM/YYYY")}
-                            </Typography>
-                        </CardContent>
-                        <Box display="flex" justifyContent="flex-end">
-                        <Button 
-                            size="medium" 
-                            type="submit"
-                            onClick={() => {
-                                dispatch(addOpposition(opposition));
-                                handleClick();
-                            }}
-                        >
-                            <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
-                        </Button>
-                        <Button size="large"
-                            type="submit"
-                        >
-                            <DeleteMatchDialog myTeam={myTeam} opposition={opposition} id={_id} onUpdate={() => handleUpdate()}/>
-                        </Button>
-                        </Box>
-                    </Card>
+            const { myTeam, opposition, homeAway, createdAt, _id } = match || {};
+            return (
+            <Zoom>
+            <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
+                <CardContent pt={1} style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
+                    {homeAway ? (
+                    <Typography align="center" variant="h5" component="h2">
+                        {myTeam} v {opposition}
+                    </Typography>  
+                    ) : (
+                    <Typography align="center" variant="h5" component="h2">
+                            {opposition} v {myTeam}
+                    </Typography>  
+                    )}
+                    <Typography align="center" variant="body2" component="p">
+                        Match saved: {moment(createdAt).format("DD/MM/YYYY")}
+                    </Typography>
+                </CardContent>
+                <Box display="flex" justifyContent="flex-end">
+                <Button 
+                    size="medium" 
+                    type="submit"
+                    onClick={() => {
+                        dispatch(addOpposition(opposition));
+                        handleClick();
+                    }}
+                >
+                    <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
+                </Button>
+                <Button size="large"
+                    type="submit"
+                >
+                    <DeleteMatchDialog 
+                        myTeam={myTeam} 
+                        opposition={opposition} 
+                        id={_id} 
+                        onUpdate={() => handleUpdate()}/>
+                </Button>
+                </Box>
+            </Card>
+            </Zoom>  
+            )
+        })}
 
-
-                    )
-                })}
-    
-      <div>
-      {loading && 
-      <Typography align="center" variant="body2">
-        <CircularProgress />
-      </Typography>  
-      }
-      </div>
-
-      <h3>{matches.length}</h3>
-
-      <button onClick={loadMore} ref={pageEnd}>
-        Load More
-      </button>
-    </div>
-  );
+        {!loading && 
+        <Typography align="center" variant="body2">
+            {matches.length} matches displayed. 
+            <br></br>
+            <Button 
+            onClick={loadMore} ref={pageEnd}
+            size="small" 
+            >
+                Load More
+            </Button>
+        </Typography>  
+        }
+        {loading && 
+        <Typography align="center">
+            <CircularProgress />
+        </Typography>  
+        }
+        </>
+        ) : (
+            <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
+                <CardContent pt={1} style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
+                    <Typography align="center" variant="body2">
+                        <CircularProgress />
+                        <br></br><br></br>
+                        You currently have no upcoming fixtures. <Link>Click here to create one.</Link>
+                    </Typography>   
+                </CardContent>
+            </Card>
+        )} 
+    </>
+    );
 }
 */
 
