@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
                 </CardContent>
                 <Box display="flex" justifyContent="flex-end">
                 <Button 
-                    size="medium" 
+                    size="large" 
                     type="submit"
                     onClick={() => {
                         dispatch(addOpposition(opposition));
@@ -111,21 +111,17 @@ const useStyles = makeStyles((theme) => ({
                     }}
                 >
                     <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
-                </Button>
-                <Button size="large"
-                    type="submit"
-                >
-                    <DeleteMatchDialog 
-                        myTeam={myTeam} 
-                        opposition={opposition} 
-                        id={_id} 
-                        matches={matches}
-                        onUpdate={(id) => {
-                            const newMatches = matches.filter(match => match._id !== id)
-                            setMatches(newMatches)
-                        }}
-                        />
-                </Button>
+                </Button >
+                <DeleteMatchDialog 
+                    myTeam={myTeam} 
+                    opposition={opposition} 
+                    id={_id} 
+                    matches={matches}
+                    onUpdate={(id) => {
+                        const newMatches = matches.filter(match => match._id !== id)
+                        setMatches(newMatches)
+                    }}
+                    />
                 </Box>
             </Card>
             </Zoom>  
@@ -148,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
 
         {end.length === 0 && 
         <Typography align="center" variant="body2">
-            End of results. 
+            End of results
         </Typography>  
         }
         </>

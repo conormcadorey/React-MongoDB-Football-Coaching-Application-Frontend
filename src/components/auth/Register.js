@@ -9,6 +9,13 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Typography from '@material-ui/core/Typography';
+
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+import Fade from 'react-reveal/Fade';
+
 import axios from "axios";
 
 export default function Register() {
@@ -69,29 +76,49 @@ export default function Register() {
     const useStyles = makeStyles((theme) => ({
       paper: {
         display: 'flex',
+        justifyContent: "center",
         flexDirection: 'column',
         alignItems: 'center',
+        marginTop: '50%',
       },
       form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
       },
-      submit: {
-        margin: theme.spacing(3, 0, 2),
+      button: {
+        padding: 10,
+        marginBottom: 20,
+        marginTop: 20,
+        backgroundColor: '#31333b',
+        color: '#FFF',
+        '&:hover': {
+            backgroundColor: '#FFF',
+            color: '#31333b'
+        }
       },
     }));
   
     const classes = useStyles();
 
   return (
+    <Fade bottom>
     <div className="page">
-      <div className="pageTitle"><h1>Register</h1></div>
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
 
       <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
+      <Card variant="outlined">
+            <CardContent p={2}>
+              <img 
+                className="logoImg" 
+                src="/images/headrexport1.png" 
+                alt=""
+              />
+              <Typography align="center" c>
+                <h4>Register</h4>
+              </Typography>
         <form className={classes.form} noValidate onSubmit={submit}>
           <TextField
             variant="outlined"
@@ -163,15 +190,18 @@ export default function Register() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={classes.button}
             disableElevation
           >
             Register with Headr
           </Button>
 
         </form>
+        </CardContent>
+        </Card>
       </div>
     </Container>
     </div>  
+    </Fade>
   );
 }

@@ -19,7 +19,6 @@ import Fade from 'react-reveal/Fade';
 export default function Home() {
 
     const {userData} = useContext(UserContext);
-    //const history = useHistory();
 
     /*
     useEffect(() => {
@@ -38,6 +37,7 @@ export default function Home() {
         button: {
             padding: 14,
             marginBottom: 16,
+            backgroundColor: '#FFF',
             '&:hover': {
                 backgroundColor: '#31333b',
                 color: '#FFF'
@@ -50,6 +50,7 @@ export default function Home() {
 return (
         <>
         {userData.user ? (
+            <Fade left big>
             <Container component="main">
                 <div className="page">
                 <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
@@ -69,9 +70,7 @@ return (
                 </Card>
 
                 <nav>
-                    <Fade left big>
                     <NewMatchDialog myTeam={userData.user.team}/>
-                    </Fade>
                     <br></br>
                         <Link to="/savedfixtures">
                         <Button 
@@ -119,6 +118,7 @@ return (
                     </nav>
                 </div>
             </Container>
+            </Fade>
         ) : (
         <RedirectToLogin/>
         )}

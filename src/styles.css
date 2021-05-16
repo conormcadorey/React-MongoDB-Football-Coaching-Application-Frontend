@@ -81,17 +81,18 @@ input[type="submit"] {
 }
 
 #header .auth-options button {
-    background-color: #323a5a;
+    background-color: #2e2558;
     padding: 0 1rem;
     color: #ffffff;
     font-size: 1rem;
 }
 
 #header .auth-options button:hover {
-    background-color: #3e5096;
+    background-color: #00ffc0;
     display: flex;
     height: 100%;
     font-size: 1rem;
+    color: #2e2558;
 }
 
 @media screen and (max-width: 550px ) {
@@ -169,6 +170,31 @@ input[type="submit"] {
     margin-top: 1rem;
 }
 
-.cardAnimate {
-    animation: scale 1.5s linear;  
+.logoImg {
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
+
+.circleBackground {
+    margin-top: -70%;
+    position: absolute;
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+    padding-top: 100%;
+    background: #5541ba;
+    z-index: -1;
+}
+
+/*
+.centre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+*/

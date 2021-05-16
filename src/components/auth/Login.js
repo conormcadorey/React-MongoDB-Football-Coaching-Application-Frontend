@@ -4,16 +4,17 @@ import UserContext from "../../context/UserContext";
 import Axios from "axios";
 import ErrorNotice from "../Errors";
 
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+import Fade from 'react-reveal/Fade';
 
 export default function Login() {
 
@@ -42,104 +43,138 @@ export default function Login() {
       //redirect user to homepage 
       history.push("/");
     } catch (err) {
-      //err.response.data.msg && setError(err.response.data.msg);
+      err.response.data.msg && setError(err.response.data.msg);
       console.log("error");
     }
   };
 
   const useStyles = makeStyles((theme) => ({
     paper: {
-      marginTop: theme.spacing(8),
       display: 'flex',
+      justifyContent: "center",
       flexDirection: 'column',
       alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+      marginTop: '50%',
     },
     form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
     },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
+    button: {
+      padding: 10,
+      marginBottom: 20,
+      marginTop: 20,
+      backgroundColor: '#31333b',
+      color: '#FFF',
+      '&:hover': {
+          backgroundColor: '#FFF',
+          color: '#31333b'
+      }
+    },
+    button2: {
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+      padding: 8,
+      marginTop: 30,
+      backgroundColor: '#FFF',
+      color: '#31333b',
+      '&:hover': {
+          backgroundColor: '#31333b',
+          color: '#FFF'
+      }
     },
   }));
 
   const classes = useStyles();
 
   return (
+    <Fade bottom>
     <div className="page">
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
-       
-      <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Typography variant="body2">
-          Created by youth coaches, for youth coaches 
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={submit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="login-email"
-            type="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="login-password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+
+        <Container component="main" maxWidth="xs">
+          <div className={classes.paper}>
+          <Card variant="outlined">
+            <CardContent p={2}>
+              <img 
+                className="logoImg" 
+                src="/images/headrexport1.png" 
+                alt=""
+              />
+              <Typography align="center" c>
+                <h4>Sign in</h4>
+              </Typography>
+              <Typography align="center" variant="body2">
+                Created by Youth Coaches, for Youth Coaches 
+              </Typography>
+              <form className={classes.form} noValidate onSubmit={submit}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="login-email"
+                  type="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="login-password"
+                  autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <Button
+                  size="large"
+                  type="submit"
+                  fullWidth
+                  variant="outlined"   
+                  className={classes.button}
+                  disableElevation
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      {"Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+              </CardContent>
+            </Card>
+          </div>
 
           <Button
-            size="large"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disableElevation
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+                  size="small"
+                  type="submit"
+                  className={classes.button2}
+                  disableElevation
+                >
+                  What is headr?
+                </Button>
+
+        </Container>
     </div>
+    </Fade>
   );
 }
