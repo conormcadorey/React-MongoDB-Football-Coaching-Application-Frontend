@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -58,11 +58,6 @@ const upcomingMatches = async(pageNumber) => {
 const handleClick = () => {
     history.push("/match");
 };
-
-const handleUpdate = (id) => {
-    const newMatches = matches.filter(match => match.id !== id)
-    setMatches(newMatches);
-}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -124,8 +119,11 @@ const useStyles = makeStyles((theme) => ({
                         myTeam={myTeam} 
                         opposition={opposition} 
                         id={_id} 
-                        //onUpdate={() => handleUpdate()}
-                        handleUpdate={handleUpdate}
+                        matches={matches}
+                        onUpdate={(id) => {
+                            const newMatches = matches.filter(match => match._id !== id)
+                            setMatches(newMatches)
+                        }}
                         />
                 </Button>
                 </Box>

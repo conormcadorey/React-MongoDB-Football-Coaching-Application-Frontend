@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 
 import Button from '@material-ui/core/Button';
@@ -14,9 +14,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default function DeleteMatchDialog(props) {
 
   //props
-  const { id, opposition, handleUpdate } = props;
-
-  const [open, setOpen] = React.useState(false);
+  const { id, opposition, onUpdate } = props;
+  const [open, setOpen] = useState(false);
 
   const handleDelete = () => {
     setOpen(true);
@@ -38,8 +37,8 @@ export default function DeleteMatchDialog(props) {
         }
       })
       .then(res => {
-        handleUpdate(id);
         setOpen(false)
+        onUpdate(id)
       })
     } catch (err) {
       console.log(err)
