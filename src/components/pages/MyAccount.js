@@ -12,6 +12,10 @@ import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+import Fade from 'react-reveal/Fade';
 
 export default function MyAccount() {
 
@@ -56,10 +60,17 @@ export default function MyAccount() {
         submit: {
             margin: theme.spacing(3, 0, 2),
           },
-          header: {
-              display: 'flex',
-              alignItems: 'center',
-          }
+        header: {
+            display: 'flex',
+            alignItems: 'center',
+            },
+        paper: {
+        display: 'flex',
+        justifyContent: "center",
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '25%',
+        },
       }));
 
     const classes = useStyles();
@@ -67,17 +78,24 @@ export default function MyAccount() {
     return (
         <>
         {userData.user ? (
+            <Fade left big>
             <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+              <Card variant="outlined">
+                <CardContent p={1}>
             <div className="page">
-                <Box className={classes.header}>
-                    <Box flexGrow={1}>
-                        <div className="pageTitle"><h1>My account</h1></div> 
-                    </Box>
-                    <Box display="flex">
-                        <Avatar src="/broken-image.jpg" style={{ height: '70px', width: '70px' }}/>
-                    </Box>
-                </Box>
-            <Typography>
+            <div className="pageTitle">
+            <Typography align="center">
+            <Avatar src="/broken-image.jpg" className={classes.header} style={{ height: '60px', width: '60px' }}/>
+            </Typography>
+            
+                        <h2>My account</h2>
+            </div>
+            
+
+                        
+
+            <Typography variant="body2">
                 You can modify your personal information from this page. 
             </Typography>
             <br></br>
@@ -100,6 +118,7 @@ export default function MyAccount() {
             {name ? (
                 <Button
                 type="submit"
+                size="large"
                 fullWidth
                 variant="contained"
                 color="primary"
@@ -111,6 +130,7 @@ export default function MyAccount() {
             ) : (
                 <Button
                 type="submit"
+                size="large"
                 fullWidth
                 variant="contained"
                 color="primary"
@@ -149,7 +169,11 @@ export default function MyAccount() {
             </Button>
             <ChangePassword/>
             </div>
-            </Container>
+            </CardContent>
+        </Card> 
+        </div>
+    </Container>
+    </Fade>
         ) : (
             <RedirectLogin/>
         ) }

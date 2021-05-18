@@ -118,7 +118,7 @@ export default function NewMatchDialog(props) {
                 <FormControl component="fieldset">
                     <FormGroup aria-label="position" row>
                         <FormControlLabel
-                        control={<Switch checked={homeAway} onChange={toggleChecked} color="primary" />}
+                        control={<Switch checked={homeAway} onChange={toggleChecked} style={{color: "#00ffc0"}} />}
                         label={homeAway? ("Home") : ("Away")}
                         labelPlacement="end"
                         />
@@ -132,7 +132,7 @@ export default function NewMatchDialog(props) {
             type="submit"
             onClick={handleSubmit}
             >
-                <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
+                <Link style={{color: "#5541ba"}}><h3>START MATCH NOW</h3></Link>
             </Button>
             <Button size="large"
             style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}

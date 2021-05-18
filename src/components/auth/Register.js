@@ -79,7 +79,7 @@ export default function Register() {
         justifyContent: "center",
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '50%',
+        marginTop: '25%',
       },
       form: {
         width: '100%', // Fix IE 11 issue.

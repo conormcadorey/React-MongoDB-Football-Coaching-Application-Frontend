@@ -65,7 +65,15 @@ export default function DeleteMatchDialog(props) {
                     variant="contained"
                     color="primary"
                     disableElevation
-                    style={{marginTop: "2rem"}}
+                    style={{
+                      marginTop: "2rem",
+                      backgroundColor: '#31333b',
+                      color: '#FFF',
+                      '&:hover': {
+                          backgroundColor: '#FFF',
+                          color: '#31333b'
+                      }
+                    }}
                     fullWidth
                     >
                         Delete 

@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
                         handleClick();
                     }}
                 >
-                    <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
+                    <Link style={{color: "#5541ba"}}><h3>START MATCH NOW</h3></Link>
                 </Button >
                 <DeleteMatchDialog 
                     myTeam={myTeam} 
@@ -130,23 +130,25 @@ const useStyles = makeStyles((theme) => ({
         })}
         </InfiniteScroll>
 
-        {!loading && 
-        <Typography align="center" variant="body2">
-            {matches.length} matches
-        </Typography>  
-        }
+        <Card variant="outlined" style={{backgroundColor: "#FFF", padding: "1rem", marginBottom: "1rem"}}>
+            {!loading && 
+            <Typography align="center" variant="body2">
+                {matches.length} matches
+            </Typography>  
+            }
 
-        {loading && 
-        <Typography align="center" variant="body2">
-            <CircularProgress />
-        </Typography>  
-        }
+            {loading && 
+            <Typography align="center" variant="body2">
+                <CircularProgress />
+            </Typography>  
+            }
 
-        {end.length === 0 && 
-        <Typography align="center" variant="body2">
-            End of results
-        </Typography>  
-        }
+            {end.length === 0 && 
+            <Typography align="center" variant="body2">
+                End of results
+            </Typography>  
+            }
+        </Card>
         </>
         ) : (
             <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>

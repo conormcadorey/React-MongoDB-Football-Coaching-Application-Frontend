@@ -11,6 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+import CreateIcon from '@material-ui/icons/Create';
+
+import Fade from 'react-reveal/Fade';
 
 export default function CreatePlayer() {
 
@@ -64,8 +70,10 @@ export default function CreatePlayer() {
   const useStyles = makeStyles((theme) => ({
     paper: {
       display: 'flex',
+      justifyContent: "center",
       flexDirection: 'column',
       alignItems: 'center',
+      marginTop: '25%',
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -85,95 +93,106 @@ export default function CreatePlayer() {
 
     return (
       <div className="page">
+        <Fade left big>
         <Container component="main" maxWidth="xs">
-        <div className="pageTitle"><h1>Create a new player</h1></div>
         <div className={classes.paper}>
-          <form className={classes.form} noValidate onSubmit={submit}>
-            <Typography variant="body2">
-              Registering your players is easy! All you need for now is their name. Change a players details at any time by &nbsp;
-              <Link to="/myteam" style={{color: "#323a5a"}}>
-                  clicking here.
-              </Link> 
-              <br></br>
-              <br></br>
-    <b>Please be aware that this player will be automatically registered to the team that you coach.</b>
-            </Typography>
-            <br></br>
-            <Typography variant="body2" color="textSecondary">
-              Enter your new players full name
-            </Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="register-player-name"
-              type="text"
-              label="Name"
-              autoFocus
-              onChange={(e) => setName(e.target.value)}
-            />
-            
-            <Typography variant="body2" color="textSecondary">
-              Select your new players main position
-            </Typography>
-            <FormControl className={classes.formControl}>
-                <Select
-                variant="outlined"
-                id="register-player-position"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
-                >
-                <MenuItem value={"N/A"}>N/A</MenuItem>
-                <MenuItem value={"Forward"}>Forward</MenuItem>
-                <MenuItem value={"Midfield"}>Midfield</MenuItem>
-                <MenuItem value={"Defence"}>Defence</MenuItem>
-                <MenuItem value={"Goal Keeper"}>Goal Keeper</MenuItem>
-                </Select>
-            </FormControl>
+          <Card variant="outlined">
+            <CardContent p={2}>
+              <div className="pageTitle">
+                <CreateIcon fontSize="large"/>
+                <br></br>
+                <h1>Create a new player</h1>
+              </div>
+                <form className={classes.form} noValidate onSubmit={submit}>
+                  <Typography variant="body2">
+                    Registering your players is easy! All you need for now is their name. Change a players details at any time by &nbsp;
+                    <Link to="/myteam" style={{color: "#323a5a"}}>
+                        clicking here.
+                    </Link> 
+                    <br></br>
+                    <br></br>
+                  <b>Please be aware that this player will be automatically registered to the team that you coach.</b>
+                  </Typography>
+                  <br></br>
+                  <Typography variant="body2" color="textSecondary">
+                    Enter your new players full name
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="register-player-name"
+                    type="text"
+                    label="Name"
+                    autoFocus
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  
+                  <Typography variant="body2" color="textSecondary">
+                    Select your new players main position
+                  </Typography>
+                  <FormControl className={classes.formControl}>
+                      <Select
+                      variant="outlined"
+                      id="register-player-position"
+                      open={open}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={position}
+                      onChange={(e) => setPosition(e.target.value)}
+                      >
+                      <MenuItem value={"N/A"}>N/A</MenuItem>
+                      <MenuItem value={"Forward"}>Forward</MenuItem>
+                      <MenuItem value={"Midfield"}>Midfield</MenuItem>
+                      <MenuItem value={"Defence"}>Defence</MenuItem>
+                      <MenuItem value={"Goal Keeper"}>Goal Keeper</MenuItem>
+                      </Select>
+                  </FormControl>
 
-            <Typography variant="body2" color="textSecondary">
-              Enter your new players squad number 
-            </Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Player's squad number"
-              id="register-player-number"
-              type="text"
-              onChange={(e) => setNumber(e.target.value)}
-            />
-            {name ? (
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disableElevation
-            >
-              Create Player
-            </Button>
-            ) : (
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disableElevation
-              disabled
-            >
-              Create Player
-            </Button>
-            )}
-          </form>
+                  <Typography variant="body2" color="textSecondary">
+                    Enter your new players squad number 
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    label="Player's squad number"
+                    id="register-player-number"
+                    type="text"
+                    onChange={(e) => setNumber(e.target.value)}
+                  />
+                  {name ? (
+                    <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    disableElevation
+                  >
+                    Create Player
+                  </Button>
+                  ) : (
+                    <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    className={classes.submit}
+                    disableElevation
+                    disabled
+                  >
+                    Create Player
+                  </Button>
+                  )}
+                </form>
+          </CardContent>
+        </Card> 
         </div>
     </Container>
+    </Fade>
     </div>  
     );
 }

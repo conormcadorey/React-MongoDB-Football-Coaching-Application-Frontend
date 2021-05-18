@@ -1,188 +1,190 @@
 /*
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from 'react';
 import axios from "axios";
-import moment from "moment";
-import DeleteMatchDialog from "./DeleteMatchDialog";
-
-import { useDispatch } from "react-redux";
-import { addOpposition } from "./../../redux/oppositionSlice";
-import { useSelector } from "react-redux";
 
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import Zoom from 'react-reveal/Zoom';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-export default function UpcomingFixtures(props) {
-
-const [matches, setMatches] = useState([])
-const [pageNumber, setPageNumber] = useState(1)
-const [loading, setLoading] = useState(true)
-const [loadMoreData, setLoadMoreData] = useState(false)
-const [update, setUpdate] = useState(false)
-const { team } = props;
-
-//redux
-const oppositionData = useSelector(
-    (state) => state.opposition.oppositionName
-);
-
-const dispatch = useDispatch();
-const url = "http://localhost:5000/match";
-const history = useHistory();
-const pageEnd = useRef();
-let num = 1;
-
-const upcomingMatches = async(pageNumber) => {
-    setLoading(true)
-    try {
-        await axios
-        .get(`${url}/paginate/${team}?page=${pageNumber}&limit=5`)
-        .then( res => {
-            setMatches(p => [...p, ...res.data.results])
-            setLoading(false)
-            setLoadMoreData(true)
-        });
-    } catch(err) {
-        console.error(err);
-    }
-};
-
-useEffect(() => {
-    upcomingMatches(pageNumber);
-},[pageNumber, update])
-
-const loadMore = () => {
-    setPageNumber(prevPageNumber => prevPageNumber + 1)
-}
-
-useEffect(() => {
-    if(loadMoreData){
-        const observer = new IntersectionObserver(entries =>{
-        if(entries[0].isIntersecting){
-            num++;
-            loadMore();
-            if(num >= 10){
-            observer.unobserve(pageEnd.current)
-            }
-        }
-        },{threshold: 1});
-        observer.observe(pageEnd.current)
-    }
-},[loadMoreData,num])
-
-/////////////////////////////////////////////////////////////////
-
-const handleClick = () => {
-    history.push("/match");
-};
-
-const handleUpdate = () => {
-    setUpdate(() => !update);
-}
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        minWidth: 275,
-    },
-    pos: {
-        marginBottom: 18,
-    },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  root: {
+    //minWidth: 275,
+  },
+  pos: {
+    marginBottom: 18,
+  },
 }));
 
-    const classes = useStyles();
+export default function EditPlayerDialog(props) {
 
-    return (
-    <>
-    <div className="pageTitle"><h1>Upcoming fixtures</h1></div>
-    <Typography variant="body2">
-        Below, are all of your upcoming saved fixtures. Just select from a fixture to begin a new match instantly! 
-        <br></br><br></br>
-    </Typography>
-    {matches.length > 0 ? (
-        <>
-        {matches.map(match => {
-            const { myTeam, opposition, homeAway, createdAt, _id } = match || {};
-            return (
-            <Zoom>
-            <Card variant="outlined" key={match._id} className={`${classes.pos} ${classes.root}`}>
-                <CardContent pt={1} style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
-                    {homeAway ? (
-                    <Typography align="center" variant="h5" component="h2">
-                        {myTeam} v {opposition}
-                    </Typography>  
-                    ) : (
-                    <Typography align="center" variant="h5" component="h2">
-                            {opposition} v {myTeam}
-                    </Typography>  
-                    )}
-                    <Typography align="center" variant="body2" component="p">
-                        Match saved: {moment(createdAt).format("DD/MM/YYYY")}
-                    </Typography>
-                </CardContent>
-                <Box display="flex" justifyContent="flex-end">
-                <Button 
-                    size="medium" 
-                    type="submit"
-                    onClick={() => {
-                        dispatch(addOpposition(opposition));
-                        handleClick();
-                    }}
-                >
-                    <Link style={{color: "#3e5096"}}><h3>START MATCH NOW</h3></Link>
-                </Button>
-                <Button size="large"
-                    type="submit"
-                >
-                    <DeleteMatchDialog 
-                        myTeam={myTeam} 
-                        opposition={opposition} 
-                        id={_id} 
-                        onUpdate={() => handleUpdate()}/>
-                </Button>
-                </Box>
-            </Card>
-            </Zoom>  
-            )
-        })}
+  //props
+  const { name, opposition, myScore, oppositionScore, onUpdate } = props;
 
-        {!loading && 
-        <Typography align="center" variant="body2">
-            {matches.length} matches displayed. 
-            <br></br>
-            <Button 
-            onClick={loadMore} ref={pageEnd}
-            size="small" 
-            >
-                Load More
+  const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+  const [changeMyScore, setChangeMyScore] = useState("");
+  const [changeOppositionScore, setChangeOppositionScore] = useState(opposition);
+  const [openDrop, setOpenDrop] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    setChangeMyScore("");
+    setChangeOppositionScore("");
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleCloseDrop = () => {
+    setOpenDrop(false);
+  };
+
+  const handleOpenDrop = () => {
+    setOpenDrop(true);
+  };
+
+
+  const handleMyScoreChange = (e) => {
+    setChangeMyScore(e.target.value);
+  }
+
+  const handleOppScoreChange = (e) => {
+    setChangeOppositionScore(e.target.value);
+  }
+
+  return (
+      <>
+      <Tooltip title="Edit player" arrow>
+        <Button 
+        onClick={handleClickOpen}
+        style={{ color: '#5541ba' }} 
+        size="large"
+        >
+            <MoreVertIcon/>
+        </Button>
+        </Tooltip>
+
+        <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
+          <DialogTitle><h2>Edit match v {opposition}</h2></DialogTitle>
+          <DialogContent>
+            <div className={classes.container}>
+            <form className="editMatchInput">
+              <Typography variant="body2" color="textSecondary">
+                  Change your team score?
+              </Typography>
+                  <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      defaultValue={myScore}
+                      id="change-home-score"
+                      type="text"
+                      onChange={handleMyScoreChange}
+                  />
+                  {changeMyScore ? (
+                      <Button
+                      type="submit"
+                      size="medium"
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      >
+                        Update Name
+                      </Button>
+                  ) : (
+                      <Button
+                      type="submit"
+                      size="medium"
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      disabled
+                      >
+                        Update Name
+                      </Button>
+                  )}
+
+                </form>
+
+                <form className="editMatchInput" >
+                  <Typography variant="body2" color="textSecondary">
+                      Change opposition score?
+                  </Typography>
+
+                      <FormControl>
+                      <Select
+                      variant="outlined"
+                      id="update-opposition-score"
+                      open={openDrop}
+                      onClose={handleCloseDrop}
+                      onOpen={handleOpenDrop}
+                      value={changeOppositionScore}
+                      onChange={handleOppScoreChange}
+                      style={{ marginTop: '0.5rem' }} 
+                      >
+                      {() => {
+                        for (var i = 0; i < 20; i++) {
+                            <MenuItem value={i}>{i}</MenuItem>
+                            console.log(i)
+                        } 
+                      }}
+
+                      </Select>
+                      </FormControl>
+
+                    {changeOppositionScore !== oppositionScore ? (
+                      <Button
+                      type="submit"
+                      size="medium"
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      style={{ display: 'block', marginTop: '0.5rem' }} 
+                      >
+                        Update Position
+                      </Button>
+                  ) : (
+                      <Button
+                      type="submit"
+                      size="medium"
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      disabled
+                      style={{ display: 'block', marginTop: '0.5rem' }} 
+                      >
+                        Update Position
+                      </Button>
+                  )}
+                  </form>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
             </Button>
-        </Typography>  
-        }
-        {loading && 
-        <Typography align="center">
-            <CircularProgress />
-        </Typography>  
-        }
-        </>
-        ) : (
-            <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
-                <CardContent pt={1} style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
-                    <Typography align="center" variant="body2">
-                        <CircularProgress />
-                        <br></br><br></br>
-                        You currently have no upcoming fixtures. <Link>Click here to create one.</Link>
-                    </Typography>   
-                </CardContent>
-            </Card>
-        )} 
-    </>
-    );
+          </DialogActions>
+        </Dialog>
+      </>
+  );
 }
 */
 

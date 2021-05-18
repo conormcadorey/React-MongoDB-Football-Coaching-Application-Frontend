@@ -3,8 +3,8 @@ import UserContext from "../../context/UserContext";
 
 import RedirectToLogin from "./RedirectLogin";
 import UpcomingFixtures from "./UpcomingFixtures";
-
-import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
 
 export default function SavedFixtures() {
 
@@ -15,11 +15,13 @@ return (
         <div className="page">
             {userData.user ? (
                 <>
-                <div className="pageTitle"><h1>Upcoming fixtures</h1></div>
-                <Typography variant="body2">
-                    Below, are all of your upcoming saved fixtures. Just select from a fixture to begin a new match instantly! 
-                    <br></br><br></br>
-                </Typography>
+                <Card variant="outlined" style={{backgroundColor: "#FFF", padding: "1rem", marginBottom: "1rem"}}>
+                    <div className="pageTitle">
+                        <WatchLaterIcon fontSize="large"/>
+                        <br></br>
+                        <h1>Upcoming fixtures</h1>
+                    </div>
+                </Card>
                 <UpcomingFixtures team={userData.user.team} />
                 </>
             ) : (

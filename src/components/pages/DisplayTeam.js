@@ -67,11 +67,6 @@ export default function DisplayTeam(props) {
 
     return (
         <>
-        <div className="pageTitle"><h1>My team</h1></div>
-            <Typography variant="body2">
-               Below, is a list of all {myTeam} players. You can only edit or delete players that you have created. 
-            </Typography>
-
             {players ? (
                 <>
                 {(players.length === 0) ? 
