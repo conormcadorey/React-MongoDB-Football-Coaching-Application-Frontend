@@ -104,7 +104,7 @@ export default function Login() {
                 src="/images/headrexport1.png" 
                 alt=""
               />
-              <Typography align="center" c>
+              <Typography align="center">
                 <h4>Sign in</h4>
               </Typography>
               <Typography align="center" variant="body2">

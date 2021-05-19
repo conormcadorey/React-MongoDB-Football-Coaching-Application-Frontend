@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -22,7 +21,7 @@ export default function MyAccount() {
     const {userData} = useContext(UserContext)
     const [name, setName] = useState("");
 
-    const id = userData.user.id;
+    const id = userData.user._id;
 
     let token = localStorage.getItem("auth-token");
     const url = "http://localhost:5000/users";
@@ -47,10 +46,10 @@ export default function MyAccount() {
     const useStyles = makeStyles((theme) => ({
         form: {
             width: '100%', // Fix IE 11 issue.
-            marginTop: theme.spacing(1),
+            //marginTop: theme.spacing(0),
           },
         button: {
-            padding: 14,
+            padding: 10,
             marginBottom: 16,
             '&:hover': {
                 backgroundColor: '#31333b',
@@ -58,7 +57,12 @@ export default function MyAccount() {
             }
         },
         submit: {
-            margin: theme.spacing(3, 0, 2),
+            margin: theme.spacing(1, 0, 4),
+            backgroundColor: "#5541ba",
+            '&:hover': {
+                backgroundColor: '#31333b',
+                color: '#FFF'
+            }
           },
         header: {
             display: 'flex',
@@ -67,10 +71,14 @@ export default function MyAccount() {
         paper: {
         display: 'flex',
         justifyContent: "center",
-        flexDirection: 'column',
         alignItems: 'center',
         marginTop: '25%',
         },
+        center: {
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column'
+         }
       }));
 
     const classes = useStyles();
@@ -83,96 +91,77 @@ export default function MyAccount() {
             <div className={classes.paper}>
               <Card variant="outlined">
                 <CardContent p={1}>
-            <div className="page">
-            <div className="pageTitle">
-            <Typography align="center">
-            <Avatar src="/broken-image.jpg" className={classes.header} style={{ height: '60px', width: '60px' }}/>
-            </Typography>
-            
-                        <h2>My account</h2>
+                    <Container className={classes.center}>
+                    <Avatar src="/broken-image.jpg" className={classes.header} style={{ height: "60px", width: "60px"}}/>
+                    </Container>
+                    <Typography variant="h5" align="center">
+                        My account
+                    </Typography>
+                        <Typography align="center" variant="body2">
+                            Modify account information here
+                        </Typography>
+                        <br></br>
+                        <Divider/>
+                        <form className={classes.form} noValidate onSubmit={submitName}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="change-name"
+                            type="text"
+                            defaultValue={userData.user.userName}
+                            autoFocus
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                        {name ? (
+                            <Button
+                            type="submit"
+                            size="large"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            disableElevation
+                        >
+                            Save
+                        </Button>
+                        ) : (
+                            <Button
+                            size="large"
+                            fullWidth
+                            variant="contained"
+                            className={classes.submit}
+                            disableElevation
+                            disabled
+                            >
+                            Save
+                            </Button>
+                        )}
+                        </form>
+
+                        <ChangePassword/>
+
+                        <Button 
+                            className={classes.button}
+                            variant="outlined"          
+                            size="small"
+                            fullWidth={true}
+                            >
+                                Change profile photo
+                        </Button>
+                        <Button 
+                            className={classes.button}
+                            variant="outlined"          
+                            size="small"
+                            fullWidth={true}
+                            >
+                                Change team
+                        </Button>
+                    </CardContent>
+                </Card> 
             </div>
-            
-
-                        
-
-            <Typography variant="body2">
-                You can modify your personal information from this page. 
-            </Typography>
-            <br></br>
-            <Divider/>
-            <form className={classes.form} noValidate onSubmit={submitName}>
-            <Typography variant="body2" color="textSecondary">
-              Your name
-            </Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="change-name"
-              type="text"
-              defaultValue={userData.user.userName}
-              autoFocus
-              onChange={(e) => setName(e.target.value)}
-            />
-            {name ? (
-                <Button
-                type="submit"
-                size="large"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disableElevation
-              >
-                Save
-              </Button>
-            ) : (
-                <Button
-                type="submit"
-                size="large"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disableElevation
-                disabled
-                >
-                Save
-                </Button>
-            )}
-            </form>
-
-            <Button 
-                className={classes.button}
-                variant="outlined"          
-                size="large"
-                fullWidth={true}
-                >
-                    Change password
-            </Button>
-            <Button 
-                className={classes.button}
-                variant="outlined"          
-                size="large"
-                fullWidth={true}
-                >
-                    Change profile photo
-            </Button>
-            <Button 
-                className={classes.button}
-                variant="outlined"          
-                size="large"
-                fullWidth={true}
-                >
-                    Change team
-            </Button>
-            <ChangePassword/>
-            </div>
-            </CardContent>
-        </Card> 
-        </div>
-    </Container>
+        </Container>
     </Fade>
         ) : (
             <RedirectLogin/>

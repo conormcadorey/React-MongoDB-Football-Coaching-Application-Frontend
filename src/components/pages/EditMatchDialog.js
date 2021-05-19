@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EditPlayerDialog(props) {
 
   //props
-  const { name, opposition, myScore, oppositionScore, homeAway, onUpdate } = props;
+  const { name, opposition, myScore, oppositionScore, homeAway, id, onUpdate } = props;
 
   let score = parseInt(myScore);
   let oppScore = parseInt(oppositionScore);
@@ -86,6 +86,27 @@ export default function EditPlayerDialog(props) {
     }
   }
 
+  let token = localStorage.getItem("auth-token");
+  const url = "http://localhost:5000/match";
+
+  const updateScore = async () => {
+    try {
+      await axios.put(`${url}/editmatch/${id}`, 
+      { myGoals: changeMyScore, oppGoals: changeOppositionScore }, {
+        headers: {
+            "Authorization": token,
+        }
+    })
+    .then(res => {
+      //setChangeName(res.data)
+      setOpen(false)
+      onUpdate();
+    })  
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
       <>
       <Tooltip title="Edit match" arrow>
@@ -110,40 +131,95 @@ export default function EditPlayerDialog(props) {
           <DialogContent>
           {homeAway ? (
              <div className={classes.container}>
-              <Typography align="center" variant="h3" color="textSecondary" style={{padding: "2rem"}}>
-                <Avatar onClick={() => setChangeMyScore(changeMyScore + 1)}  className={classes.counter}>+</Avatar> 
+              <Typography 
+                align="center" 
+                variant="h3" 
+                color="textSecondary" 
+                style={{padding: "2rem"}}
+              >
+                <Avatar 
+                  onClick={() => setChangeMyScore(changeMyScore + 1)}  
+                  className={classes.counter}>
+                  +
+                  </Avatar> 
                   {changeMyScore}
-                <Avatar onClick={() => decrementMyScore()} className={classes.counter}>-</Avatar>
+                <Avatar 
+                  onClick={() => decrementMyScore()} 
+                  className={classes.counter}>
+                  -
+                </Avatar>
               </Typography>
-              <Typography align="center" variant="h3" color="textSecondary" style={{padding: "2rem"}}>
-                <Avatar onClick={() => setChangeOppositionScore(changeOppositionScore + 1)} className={classes.counter}>+</Avatar> 
+              <Typography 
+                align="center" 
+                variant="h3" 
+                color="textSecondary" 
+                style={{padding: "2rem"}}
+              >
+                <Avatar 
+                  onClick={() => setChangeOppositionScore(changeOppositionScore + 1)} 
+                  className={classes.counter}>
+                  +
+                </Avatar> 
                   {changeOppositionScore} 
-                <Avatar onClick={() => decrementOppScore()} className={classes.counter}>-</Avatar>
+                <Avatar 
+                  onClick={() => decrementOppScore()} 
+                  className={classes.counter}>
+                  -
+                  </Avatar>
               </Typography>
             </div>
             ) : (
               <div className={classes.container}>
-                <Typography align="center" variant="h3" color="textSecondary" style={{padding: "2rem"}}>
-                <Avatar onClick={() => setChangeOppositionScore(changeOppositionScore + 1)} className={classes.counter}>+</Avatar> 
+                <Typography 
+                  align="center" 
+                  variant="h3" 
+                  color="textSecondary" 
+                  style={{padding: "2rem"}}
+                >
+                <Avatar 
+                  onClick={() => setChangeOppositionScore(changeOppositionScore + 1)} 
+                  className={classes.counter}>
+                  +
+                  </Avatar> 
                   {changeOppositionScore} 
-                <Avatar onClick={() => decrementOppScore()} className={classes.counter}>-</Avatar>
+                <Avatar 
+                  onClick={() => decrementOppScore()} 
+                  className={classes.counter}>
+                    -
+                </Avatar>
               </Typography>
-              <Typography align="center" variant="h3" color="textSecondary" style={{padding: "2rem"}}>
-                <Avatar onClick={() => setChangeMyScore(changeMyScore + 1)}  className={classes.counter}>+</Avatar> 
+              <Typography 
+                align="center" 
+                variant="h3" 
+                color="textSecondary" 
+                style={{padding: "2rem"}}
+              >
+                <Avatar 
+                  onClick={() => setChangeMyScore(changeMyScore + 1)}  
+                  className={classes.counter}>
+                  +
+                </Avatar> 
                   {changeMyScore}
-                <Avatar onClick={() => decrementMyScore()} className={classes.counter}>-</Avatar>
+                <Avatar 
+                  onClick={() => decrementMyScore()} 
+                  className={classes.counter}>
+                  -
+                  </Avatar>
               </Typography>
             </div>
             )}
             <Button
               fullWidth
               size="large"
+              onClick={() => {
+                updateScore()
+              }}
             >
               SAVE CHANGES
             </Button>
           </DialogContent>
           <DialogActions>
-            <IconButton onClick={handleClose} className={classes.button}>
+            <IconButton size="small" onClick={handleClose} className={classes.button}>
               <CloseIcon/>
             </IconButton>
           </DialogActions>

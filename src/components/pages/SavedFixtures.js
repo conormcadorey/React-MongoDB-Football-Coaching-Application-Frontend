@@ -3,25 +3,24 @@ import UserContext from "../../context/UserContext";
 
 import RedirectToLogin from "./RedirectLogin";
 import UpcomingFixtures from "./UpcomingFixtures";
-import Card from '@material-ui/core/Card';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
+import Typography from '@material-ui/core/Typography';
 
 export default function SavedFixtures() {
 
 const {userData} = useContext(UserContext);
 
-
 return (
         <div className="page">
             {userData.user ? (
                 <>
-                <Card variant="outlined" style={{backgroundColor: "#FFF", padding: "1rem", marginBottom: "1rem"}}>
-                    <div className="pageTitle">
+                    <div className="pageTitle" style={{color: "#FFF", padding: "1rem", marginBottom: "1rem"}}>
                         <WatchLaterIcon fontSize="large"/>
                         <br></br>
-                        <h1>Upcoming fixtures</h1>
+                        <Typography variant="h5" align="center">
+                            Upcoming fixtures
+                        </Typography>
                     </div>
-                </Card>
                 <UpcomingFixtures team={userData.user.team} />
                 </>
             ) : (

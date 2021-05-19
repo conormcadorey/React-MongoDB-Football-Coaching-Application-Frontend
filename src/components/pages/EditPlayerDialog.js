@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import CloseIcon from '@material-ui/icons/Close';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -27,6 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
   pos: {
     marginBottom: 18,
+  },
+  button: {
+    backgroundColor: '#31333b',
+    color: '#FFF',
+    '&:hover': {
+      backgroundColor: '#31333b',
+      color: '#FFF'
+  }
   },
 }));
 
@@ -141,7 +151,7 @@ export default function EditPlayerDialog(props) {
       <Tooltip title="Edit player" arrow>
         <Button 
         onClick={handleClickOpen}
-        style={{ color: 'blue' }} 
+        style={{ color: "#5541ba" }} 
         size="large"
         >
             <MoreVertIcon/>
@@ -170,19 +180,16 @@ export default function EditPlayerDialog(props) {
                       type="submit"
                       size="medium"
                       variant="contained"
-                      color="primary"
                       disableElevation
+                      className={classes.button}
                       >
                         Update Name
                       </Button>
                   ) : (
                       <Button
-                      type="submit"
                       size="medium"
-                      variant="contained"
-                      color="primary"
-                      disableElevation
                       disabled
+                      variant="contained"
                       >
                         Update Name
                       </Button>
@@ -219,7 +226,7 @@ export default function EditPlayerDialog(props) {
                       type="submit"
                       size="medium"
                       variant="contained"
-                      color="primary"
+                      className={classes.button}
                       disableElevation
                       style={{ display: 'block', marginTop: '0.5rem' }} 
                       >
@@ -227,11 +234,8 @@ export default function EditPlayerDialog(props) {
                       </Button>
                   ) : (
                       <Button
-                      type="submit"
                       size="medium"
                       variant="contained"
-                      color="primary"
-                      disableElevation
                       disabled
                       style={{ display: 'block', marginTop: '0.5rem' }} 
                       >
@@ -258,18 +262,15 @@ export default function EditPlayerDialog(props) {
                       type="submit"
                       size="medium"
                       variant="contained"
-                      color="primary"
+                      className={classes.button}
                       disableElevation
                       >
                         Update Number
                       </Button>
                   ) : (
                       <Button
-                      type="submit"
                       size="medium"
                       variant="contained"
-                      color="primary"
-                      disableElevation
                       disabled
                       >
                         Update Number
@@ -279,9 +280,9 @@ export default function EditPlayerDialog(props) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
+            <IconButton size="small" onClick={handleClose} className={classes.button}>
+              <CloseIcon/>
+            </IconButton>
           </DialogActions>
         </Dialog>
       </>

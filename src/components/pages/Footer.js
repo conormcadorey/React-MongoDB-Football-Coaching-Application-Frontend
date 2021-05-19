@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+import userContext from "../../context/UserContext";
 
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function Footer() {
+
+  const {userData} = useContext(userContext);
 
   //Copyright 
   function Copyright() {
@@ -21,7 +24,14 @@ export default function Footer() {
 
   return (
     <div className="footerStyles">
-      <Box mt={8}>
+      {userData.user ? (
+        <img 
+        className="logoImg" 
+        src="/images/headrexport1.png" 
+        alt=""
+      />
+      ) : ("n")}
+      <Box mt={2}>
         <Copyright />
       </Box>
     </div>

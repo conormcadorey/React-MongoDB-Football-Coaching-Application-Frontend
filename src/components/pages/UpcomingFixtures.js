@@ -6,7 +6,7 @@ import DeleteMatchDialog from "./DeleteMatchDialog";
 
 import { useDispatch } from "react-redux";
 import { addOpposition } from "./../../redux/oppositionSlice";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -28,9 +28,11 @@ const [end, setEnd] = useState([])
 const { team } = props;
 
 //redux
+/*
 const oppositionData = useSelector(
     (state) => state.opposition.oppositionName
 );
+*/
 
 const dispatch = useDispatch();
 const url = "http://localhost:5000/match";
@@ -70,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
     const classes = useStyles();
 
-    return (
+return (
     <>
     {matches.length > 0 ? (
         <>

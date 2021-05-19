@@ -101,7 +101,9 @@ export default function CreatePlayer() {
               <div className="pageTitle">
                 <CreateIcon fontSize="large"/>
                 <br></br>
-                <h1>Create a new player</h1>
+                <Typography variant="h5" align="center">
+                    Create a new player
+                </Typography>
               </div>
                 <form className={classes.form} noValidate onSubmit={submit}>
                   <Typography variant="body2">

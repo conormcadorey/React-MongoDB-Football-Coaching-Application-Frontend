@@ -20,6 +20,14 @@ const useStyles = makeStyles((theme) => ({
     pos: {
       marginBottom: 18,
     },
+    button: {
+      padding: 10,
+      marginBottom: 16,
+      '&:hover': {
+          backgroundColor: '#31333b',
+          color: '#FFF'
+      }
+  },
   }));
 
 export default function ChangePassword() {
@@ -44,11 +52,13 @@ export default function ChangePassword() {
     return (
         <>
             <Button 
-            onClick={handlePassOpen}
-            style={{ color: 'blue' }} 
-            size="large"
-            >
-                TEST
+                className={classes.button}
+                onClick={handlePassOpen}
+                variant="outlined"          
+                size="small"
+                fullWidth={true}
+                >
+                  Change password
             </Button>
 
             <Dialog disableBackdropClick disableEscapeKeyDown open={openPass} onClose={handlePassClose}>

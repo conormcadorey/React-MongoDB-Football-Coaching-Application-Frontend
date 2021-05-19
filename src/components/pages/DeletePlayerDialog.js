@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,13 +12,14 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
 export default function EditPlayerDialog(props) {
 
   //props
   const { name, id, onUpdate } = props;
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDelete = () => {
     setOpen(true);
@@ -46,6 +49,18 @@ export default function EditPlayerDialog(props) {
     }
   }
 
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      backgroundColor: '#FFF',
+        '&:hover': {
+            backgroundColor: '#31333b',
+            color: '#FFF'
+        }
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
     <>
     <Tooltip title="Delete player" arrow>
@@ -64,7 +79,14 @@ export default function EditPlayerDialog(props) {
                     type="submit"
                     size="large"
                     variant="contained"
-                    color="primary"
+                    style={{
+                      backgroundColor: '#31333b',
+                      color: '#FFF',
+                      '&:hover': {
+                          backgroundColor: '#FFF',
+                          color: '#31333b'
+                      }
+                    }}
                     disableElevation
                     fullWidth
                     >
@@ -74,9 +96,9 @@ export default function EditPlayerDialog(props) {
             </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
+          <IconButton size="small" onClick={handleClose} className={classes.button}>
+            <CloseIcon/>
+          </IconButton>
         </DialogActions>
       </Dialog>
     </>

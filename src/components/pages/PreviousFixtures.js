@@ -50,6 +50,11 @@ const previousMatches = async(pageNumber) => {
     }
 };
 
+const reloadComponent = () => {
+    matches.length = 0;
+    previousMatches()
+}
+
 const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: 275,
@@ -107,11 +112,26 @@ return (
                                 {userId === myId ? 
                                 (
                                     <>
-                                    <EditMatchDialog name={myTeam} opposition={oppTeam} myScore={myGoals} oppositionScore={oppGoals} homeAway={homeAway}/>
+                                    <EditMatchDialog 
+                                        name={myTeam} 
+                                        opposition={oppTeam} 
+                                        myScore={myGoals} 
+                                        oppositionScore={oppGoals} 
+                                        homeAway={homeAway}
+                                        id={_id}
+                                        onUpdate={() => {
+                                            reloadComponent()
+                                        }}
+                                    />
                                     <DeleteMatchDialog 
                                         myTeam={myTeam} 
                                         opposition={oppTeam} 
                                         id={_id}
+                                        matches={matches}
+                                        onUpdate={(id) => {
+                                            const newMatches = matches.filter(match => match._id !== id)
+                                            setMatches(newMatches)
+                                        }}
                                     />
                                     </>
                                 ) : (

@@ -1,190 +1,148 @@
 /*
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
+import EditPlayerDialog from "./EditPlayerDialog";
+import DeletePlayerDialog from "./DeletePlayerDialog";
 
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  root: {
-    //minWidth: 275,
-  },
-  pos: {
-    marginBottom: 18,
-  },
-}));
+export default function DisplayTeam(props) {
 
-export default function EditPlayerDialog(props) {
+    const [players, setPlayers] = useState([]);
+    //const [error, setError] = useState();
 
-  //props
-  const { name, opposition, myScore, oppositionScore, onUpdate } = props;
+    const {myTeam, myId } = props;
 
-  const classes = useStyles();
+    useEffect(() => {
+        getPlayers();
+    }, []); 
 
-  const [open, setOpen] = useState(false);
-  const [changeMyScore, setChangeMyScore] = useState("");
-  const [changeOppositionScore, setChangeOppositionScore] = useState(opposition);
-  const [openDrop, setOpenDrop] = useState(false);
+    const getPlayers = async () => {
+        try {
+            let token = localStorage.getItem("auth-token");
+            const url = "http://localhost:5000/players";
 
-  const handleClickOpen = () => {
-    setOpen(true);
-    setChangeMyScore("");
-    setChangeOppositionScore("");
-  };
+            await axios.get(`${url}/allauth/${myTeam}`, {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            .then( response => setPlayers(response.data))
+        } catch (err) {
+            //err.response.data.msg && setError(err.response.data.msg);
+        }      
+    }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const handleUpdate = () => {
+        getPlayers();
+    }
 
-  const handleCloseDrop = () => {
-    setOpenDrop(false);
-  };
+    const useStyles = makeStyles((theme) => ({
+    root: {
+        minWidth: 275,
+    },
+    pos: {
+        marginBottom: 18,
+    },
+    formControl: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        minWidth: 120,
+        },
+    }));
 
-  const handleOpenDrop = () => {
-    setOpenDrop(true);
-  };
+    const classes = useStyles();
 
-
-  const handleMyScoreChange = (e) => {
-    setChangeMyScore(e.target.value);
-  }
-
-  const handleOppScoreChange = (e) => {
-    setChangeOppositionScore(e.target.value);
-  }
-
-  return (
-      <>
-      <Tooltip title="Edit player" arrow>
-        <Button 
-        onClick={handleClickOpen}
-        style={{ color: '#5541ba' }} 
-        size="large"
-        >
-            <MoreVertIcon/>
-        </Button>
-        </Tooltip>
-
-        <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-          <DialogTitle><h2>Edit match v {opposition}</h2></DialogTitle>
-          <DialogContent>
-            <div className={classes.container}>
-            <form className="editMatchInput">
-              <Typography variant="body2" color="textSecondary">
-                  Change your team score?
-              </Typography>
-                  <TextField
-                      variant="outlined"
-                      margin="normal"
-                      fullWidth
-                      defaultValue={myScore}
-                      id="change-home-score"
-                      type="text"
-                      onChange={handleMyScoreChange}
-                  />
-                  {changeMyScore ? (
-                      <Button
-                      type="submit"
-                      size="medium"
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                      >
-                        Update Name
-                      </Button>
-                  ) : (
-                      <Button
-                      type="submit"
-                      size="medium"
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                      disabled
-                      >
-                        Update Name
-                      </Button>
-                  )}
-
-                </form>
-
-                <form className="editMatchInput" >
-                  <Typography variant="body2" color="textSecondary">
-                      Change opposition score?
-                  </Typography>
-
-                      <FormControl>
-                      <Select
-                      variant="outlined"
-                      id="update-opposition-score"
-                      open={openDrop}
-                      onClose={handleCloseDrop}
-                      onOpen={handleOpenDrop}
-                      value={changeOppositionScore}
-                      onChange={handleOppScoreChange}
-                      style={{ marginTop: '0.5rem' }} 
-                      >
-                      {() => {
-                        for (var i = 0; i < 20; i++) {
-                            <MenuItem value={i}>{i}</MenuItem>
-                            console.log(i)
-                        } 
-                      }}
-
-                      </Select>
-                      </FormControl>
-
-                    {changeOppositionScore !== oppositionScore ? (
-                      <Button
-                      type="submit"
-                      size="medium"
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                      style={{ display: 'block', marginTop: '0.5rem' }} 
-                      >
-                        Update Position
-                      </Button>
-                  ) : (
-                      <Button
-                      type="submit"
-                      size="medium"
-                      variant="contained"
-                      color="primary"
-                      disableElevation
-                      disabled
-                      style={{ display: 'block', marginTop: '0.5rem' }} 
-                      >
-                        Update Position
-                      </Button>
-                  )}
-                  </form>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
-  );
+    return (
+        <>
+            {players ? (
+                <>
+                {(players.length === 0) ? 
+                    (
+                        <p>You currently have no players. Click here to start building your team!</p>
+                    ) : (
+                        players.map(player => {
+                            const { name, position, number, _id, userId } = player || {};
+                            return (
+                                <Card variant="outlined" key={player._id} className={`${classes.pos} ${classes.root}`}>
+                                    <Box display="flex" pt={1} style={{backgroundColor: "#F4F4F4"}}>
+                                        <Box p={1} flexGrow={1}>
+                                            <CardContent>
+                                                <Typography variant="h5" component="h2">
+                                                    {name}
+                                                </Typography>
+                                                <Typography color="textSecondary">
+                                                    Position | {position} 
+                                                </Typography>
+                                                <Typography variant="body2" component="p">
+                                                    Number | {number} 
+                                                <br />
+                                                </Typography>
+                                            </CardContent>
+                                        </Box>
+                                        <Box p={1}>
+                                            <CardContent>
+                                                <Avatar src="/broken-image.jpg" style={{ height: '70px', width: '70px' }}/>
+                                            </CardContent>
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" justifyContent="flex-end">
+                                        <CardActions>
+                                            {userId === myId ? 
+                                            (
+                                                <>
+                                                <EditPlayerDialog name={name} position={position} number={number} id={_id} onUpdate={() => handleUpdate()}/>
+                                                <DeletePlayerDialog name={name} id={_id} onUpdate={() => handleUpdate()}/>
+                                                </>
+                                            ) : (
+                                                <>
+                                                <Tooltip title="Cannot edit this player. Update your Admin privileges" arrow>
+                                                <span>
+                                                    <Button 
+                                                    disabled
+                                                    size="large"
+                                                    >
+                                                        <MoreVertIcon/>
+                                                    </Button>
+                                                </span>
+                                                </Tooltip>
+                
+                                                <Tooltip title="Cannot delete this player. Update your Admin privileges" arrow>
+                                                <span>
+                                                    <Button disabled size="large">
+                                                        <DeleteIcon/>
+                                                    </Button>
+                                                </span>
+                                                </Tooltip> 
+                                                </>
+                                            )}   
+                                        </CardActions>
+                                    </Box>
+                                </Card>
+                            )
+                        })
+                    )
+                }
+                </>
+            ) : (
+                <CircularProgress />
+            )
+            }
+        </>
+    );
 }
 */
 
