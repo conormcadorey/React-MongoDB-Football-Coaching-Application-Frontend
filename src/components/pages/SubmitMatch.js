@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+
+import CloseIcon from '@material-ui/icons/Close';
 
 export default function EditPlayerDialog(props) {
 
@@ -41,11 +45,31 @@ export default function EditPlayerDialog(props) {
             "Authorization": token
         }
     })
-      history.push("/");
+      history.push("/fixtures");
     } catch (err) {
       console.log(err)
     }
   }
+
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      backgroundColor: '#FFF',
+        '&:hover': {
+            backgroundColor: '#31333b',
+            color: '#FFF'
+        }
+    },
+    submit: {
+      backgroundColor: '#31333b',
+      color: '#FFF',
+        '&:hover': {
+          backgroundColor: '#31333b',
+          color: '#FFF'
+      }
+    }
+  }));
+
+  const classes = useStyles();
 
   return (
     <>
@@ -58,12 +82,10 @@ export default function EditPlayerDialog(props) {
       </Button>
 
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle><h2>End this match?</h2></DialogTitle>
+        <DialogTitle><h2>{myTeam} {myGoals} | {oppGoals} {oppTeam}</h2></DialogTitle>
         <DialogContent align="center">
             <Typography variant="body2" color="textSecondary">
-                This match will be saved under your previous fixtures. 
-                <br></br>
-                {myTeam} : {myGoals} | {oppGoals} : {oppTeam}
+                This match will be saved under your Previous Fixtures         
             </Typography>
             <form onSubmit={saveMatch}>
             <div className="deletePlayerButton">
@@ -71,18 +93,19 @@ export default function EditPlayerDialog(props) {
                     type="submit"
                     size="large"
                     variant="contained"
-                    color="primary"
+                    className={classes.submit}
                     disableElevation
+                    fullWidth
                     >
-                        SAVE MATCH 
+                        SAVE AND END MATCH 
                 </Button>
             </div>
             </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
+          <IconButton IconButton size="small" onClick={handleClose} className={classes.button}>
+            <CloseIcon/>
+          </IconButton>
         </DialogActions>
       </Dialog>
     </>

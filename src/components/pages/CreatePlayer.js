@@ -81,6 +81,12 @@ export default function CreatePlayer() {
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor: '#31333b',
+      color: '#FFF',
+        '&:hover': {
+          backgroundColor: '#31333b',
+          color: '#FFF'
+      }
     },
     formControl: {
         marginTop: theme.spacing(2),
@@ -170,6 +176,7 @@ export default function CreatePlayer() {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    size="large"
                     className={classes.submit}
                     disableElevation
                   >
@@ -177,13 +184,10 @@ export default function CreatePlayer() {
                   </Button>
                   ) : (
                     <Button
-                    type="submit"
                     fullWidth
                     variant="contained"
                     size="large"
-                    color="primary"
                     className={classes.submit}
-                    disableElevation
                     disabled
                   >
                     Create Player

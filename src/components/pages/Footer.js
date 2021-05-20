@@ -30,7 +30,7 @@ export default function Footer() {
         src="/images/headrexport1.png" 
         alt=""
       />
-      ) : ("n")}
+      ) : ("")}
       <Box mt={2}>
         <Copyright />
       </Box>

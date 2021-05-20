@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import UserContext from "../../context/UserContext";
+
 import Timer from "./Timer";
 import PauseTimer from "./PauseTimer";
 import SubmitModal from "./SubmitMatch";
-
 import { useSelector } from "react-redux";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,12 +22,19 @@ export default function Match() {
     );
 
     const {userData} = useContext(UserContext);
+    const history = useHistory();
 
     //timer boolean from edux
     const isRunning = useSelector((state) => state.timer);
 
     const [myGoals, setMyGoals] = useState(0);
     const [oppGoals, setOppGoals] = useState(0);
+
+    const cancelMatch = () => {
+        setMyGoals(0);
+        setOppGoals(0);
+        history.push("/")
+    }
 
      /////////////////////////
      const useStyles = makeStyles({
@@ -38,6 +46,7 @@ export default function Match() {
         },
         loadingRoot: {
             width: '100%',
+            paddingTop: "2rem",
         },
       });
 
@@ -46,7 +55,11 @@ export default function Match() {
 
     return (
         <div className="page">
-        <h1>{isRunning ? ("Match: LIVE"):("Match: LIVE(Paused)")}</h1>
+        <div className="pageTitle" style={{color: "#FFF", padding: "1rem", marginBottom: "1rem"}}>
+            <Typography variant="h5">
+                {isRunning ? ("Match: Live"):("Match: Paused")}
+            </Typography>
+        </div>
         <div className="matchCard">
             <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
                 <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
@@ -104,7 +117,15 @@ export default function Match() {
                             </>
                         )}
                     <PauseTimer/>
-                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={oppositionData}/>                   
+                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={oppositionData}/>     
+                    <Button 
+                        fullWidth={true}
+                        onClick={() => cancelMatch()}
+                        style={{padding: "1rem"}}
+                        size="large"
+                        >
+                        CANCEL MATCH
+                    </Button>              
                 </Card>
         </div>
         </div>
