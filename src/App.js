@@ -13,6 +13,7 @@ import CreatePlayer from "./components/pages/CreatePlayer";
 import SavedFixtures from "./components/pages/SavedFixtures";
 import MyFixtures from "./components/pages/Fixtures";
 import MyAccount from "./components/pages/MyAccount";
+import Statistics from "./components/pages/Statistics";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 import UserContext from "./context/UserContext";
@@ -89,6 +90,7 @@ export default function App() {
                 <ProtectedRoute path="/fixtures" component={MyFixtures} />
                 <ProtectedRoute path="/savedfixtures" component={SavedFixtures} />
                 <ProtectedRoute path="/myaccount" component={MyAccount} />
+                <Route path="/statistics" component={Statistics}/>
                 {/*<Route path="/test" component={Test} />*/}
             </Switch>
             </div>

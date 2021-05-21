@@ -42,6 +42,7 @@ export default function Login() {
       });
       //add token to local storage
       localStorage.setItem("auth-token", loginRes.data.token);
+      localStorage.setItem('user-data', JSON.stringify(loginRes.data.user));
       //redirect user to homepage 
       history.push("/");
     } catch (err) {

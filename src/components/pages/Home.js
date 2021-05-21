@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import UserContext from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import NewMatchDialog from "./NewMatchDialog";
+import moment from "moment";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -38,6 +39,15 @@ export default function Home() {
 
     const classes = useStyles();
 
+    const greetingText = () => { 
+        const now = moment(); const currentHour = now.local().hour();
+        console.log("TIME")
+        console.log(currentHour)
+         if (currentHour >= 12 && currentHour <= 17) return 'Good Afternoon'; 
+         else if (currentHour <= 24) return 'Good Evening'; 
+         else return 'Good Morning'; 
+    }; 
+
 return (
         <>
             <Fade left big>
@@ -48,7 +58,7 @@ return (
                             <Box flexGrow={1}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
-                                        Hello {userData.user.userName}!  
+                                        {greetingText()} {userData.user.userName}!  
                                     </Typography>
                                     <Typography color="textSecondary" variant="body2" component="p">
                                         Select from an option below to begin
@@ -103,6 +113,17 @@ return (
                         fullWidth={true}
                         >
                             Create a player
+                        </Button>
+                        </Link>
+
+                        <Link to="/statistics">
+                        <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="large"
+                        fullWidth={true}
+                        >
+                            Statistics
                         </Button>
                         </Link>
                     </nav>

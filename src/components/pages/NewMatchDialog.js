@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import { useDispatch } from "react-redux";
-import { addOpposition } from "./../../redux/oppositionSlice";
+import { addOpposition, addHomeAway } from "./../../redux/oppositionSlice";
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -39,9 +39,10 @@ export default function NewMatchDialog(props) {
       alert("Please enter an opposition team!");
     } else {
     e.preventDefault();
-    //action is passed as first param (addTodo())
-    //define payload value using 'value' var
+    //action is passed as first param (addOpposition())
+    //define payload value as second param
     dispatch(addOpposition(oppTeam));
+    dispatch(addHomeAway(homeAway));
     history.push("/match");
     }
   };
@@ -84,66 +85,64 @@ export default function NewMatchDialog(props) {
 
   const classes = useStyles();
 
-
-    return (
-      <>
-
-        <Card variant="outlined">
-            <CardActions className={classes.root}>
-                <Typography color="textSecondary">
-                    Create a new match
-                </Typography>
-            </CardActions>
-            <form className="createMatchForm" onSubmit={handleSubmit}>
-            <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
-                <Typography align="center" variant="h5" component="h2">
-                   {myTeam}
-                </Typography>
-                <Typography align="center" color="textSecondary">
-                    vs
-                </Typography>
-            
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Opposition team"
-                    id="opposition-team-name"
-                    type="text"
-                    value={oppTeam} 
-                    onChange={handleChange}
-                    inputProps={{style: {textTransform: "capitalize"}}}
-                    />
-                <FormControl component="fieldset">
-                    <FormGroup aria-label="position" row>
-                        <FormControlLabel
-                        control={<Switch checked={homeAway} onChange={toggleChecked} color="default"/>}
-                        label={homeAway? ("Home") : ("Away")}
-                        labelPlacement="end"
-                        color="secondary"
-                        />
-                    </FormGroup>
-                </FormControl>
-            
-            </CardContent>
-            <Button 
-            size="large" 
-            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
-            type="submit"
-            onClick={handleSubmit}
-            >
-                <Link style={{color: "#5541ba"}}><h3>START MATCH NOW</h3></Link>
-            </Button>
-            <Button size="large"
-            style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
-            type="submit"
-            onClick={handleSave}
-            >
-                <h3>SAVE FOR LATER </h3>
-            </Button>
-            </form>
-        </Card>
-        </>
-    );
+  return (
+    <>
+      <Card variant="outlined">
+          <CardActions className={classes.root}>
+              <Typography color="textSecondary">
+                  Create a new match
+              </Typography>
+          </CardActions>
+          <form className="createMatchForm" onSubmit={handleSubmit}>
+          <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
+              <Typography align="center" variant="h4" component="h2">
+                  {myTeam}
+              </Typography>
+              <Typography align="center" color="textSecondary">
+                  vs
+              </Typography>
+          
+                  <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Opposition team"
+                  id="opposition-team-name"
+                  type="text"
+                  value={oppTeam} 
+                  onChange={handleChange}
+                  inputProps={{style: {textTransform: "capitalize"}}}
+                  />
+              <FormControl component="fieldset">
+                  <FormGroup aria-label="position" row>
+                      <FormControlLabel
+                      control={<Switch checked={homeAway} onChange={toggleChecked} color="default"/>}
+                      label={homeAway? ("Home") : ("Away")}
+                      labelPlacement="end"
+                      color="secondary"
+                      />
+                  </FormGroup>
+              </FormControl>
+          
+          </CardContent>
+          <Button 
+          size="large" 
+          style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+          type="submit"
+          onClick={handleSubmit}
+          >
+              <Link style={{color: "#5541ba"}}><h3>START MATCH NOW</h3></Link>
+          </Button>
+          <Button size="large"
+          style={{width: "50%", paddingTop: "2rem", paddingBottom: "2rem"}}
+          type="submit"
+          onClick={handleSave}
+          >
+              <h3>SAVE FOR LATER </h3>
+          </Button>
+          </form>
+      </Card>
+      </>
+  );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../context/UserContext";
-
 import Timer from "./Timer";
 import PauseTimer from "./PauseTimer";
 import SubmitModal from "./SubmitMatch";
@@ -19,6 +18,9 @@ export default function Match() {
     //oppopsition team info from redux 
     const oppositionData = useSelector(
         (state) => state.opposition.oppositionName
+    );
+    const matchHomeAway = useSelector(
+        (state) => state.opposition.homeAway
     );
 
     const {userData} = useContext(UserContext);
@@ -63,12 +65,26 @@ export default function Match() {
         <div className="matchCard">
             <Card variant="outlined" className={`${classes.pos} ${classes.root}`}>
                 <CardContent style={{backgroundColor: "#F4F4F4", padding: "2rem"}}>
-                <Typography align="center" variant="h6" component="h2">
-                        {userData.user.team.toUpperCase()} v {oppositionData.toUpperCase()}
-                    </Typography>
-                    <Typography align="center" variant="h1" color="textSecondary">
-                        {myGoals} - {oppGoals}
-                    </Typography>
+                    {matchHomeAway ? (
+                        <>
+                        <Typography align="center" variant="h6" component="h2">
+                            {userData.user.team.toUpperCase()} v {oppositionData.toUpperCase()}
+                        </Typography>
+                        <Typography align="center" variant="h1" color="textSecondary">
+                            {myGoals} - {oppGoals}
+                        </Typography>
+                        </>
+                    ) : (
+                        <>
+                        <Typography align="center" variant="h6" component="h2">
+                            {oppositionData.toUpperCase()} v {userData.user.team.toUpperCase()}
+                        </Typography>
+                        <Typography align="center" variant="h1" color="textSecondary">
+                            {oppGoals} - {myGoals}
+                        </Typography>
+                    </>
+                    )}
+                    
                     <Typography align="center" component="h2">
                         <Timer/>
                     </Typography>
@@ -117,7 +133,7 @@ export default function Match() {
                             </>
                         )}
                     <PauseTimer/>
-                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={oppositionData}/>     
+                    <SubmitModal myGoals={myGoals} oppGoals={oppGoals} myTeam={userData.user.team} oppTeam={oppositionData} homeAway={matchHomeAway}/>     
                     <Button 
                         fullWidth={true}
                         onClick={() => cancelMatch()}

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
-import RedirectLogin from "./RedirectLogin";
 import ChangePassword from "./ChangePassword";
 
 import { makeStyles } from '@material-ui/core/styles';

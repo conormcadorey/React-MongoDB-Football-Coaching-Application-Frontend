@@ -9,7 +9,6 @@ export default function MyFixtures() {
 
 const {userData} = useContext(UserContext);
 
-
 return (
     <div className="page">
         <>

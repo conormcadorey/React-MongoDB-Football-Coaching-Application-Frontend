@@ -25,7 +25,7 @@ const ProtectedRoute = ({ component: Comp, path, ...rest }) => {
             disableElevation
             onClick={() => history.push("/login")}
           >
-              Login 
+              Click here if page doesn't load
           </Button></div>: <Redirect to="/login" />)
         }}
       />

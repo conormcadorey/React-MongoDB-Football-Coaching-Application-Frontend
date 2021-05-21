@@ -16,8 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 export default function EditPlayerDialog(props) {
 
   //props
-  const { myGoals, oppGoals, myTeam, oppTeam } = props;
-  const homeAway = true;
+  const { myGoals, oppGoals, myTeam, oppTeam, homeAway } = props;
   const complete = "Y";
   const duration = "90";
 
@@ -82,7 +81,11 @@ export default function EditPlayerDialog(props) {
       </Button>
 
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle><h2>{myTeam} {myGoals} | {oppGoals} {oppTeam}</h2></DialogTitle>
+        {homeAway ? (
+          <DialogTitle><h2>{myTeam} {myGoals} | {oppGoals} {oppTeam}</h2></DialogTitle>
+        ) : (
+          <DialogTitle><h2>{oppTeam} {oppGoals} | {myGoals} {myTeam}</h2></DialogTitle>
+        )}
         <DialogContent align="center">
             <Typography variant="body2" color="textSecondary">
                 This match will be saved under your Previous Fixtures         
