@@ -41,7 +41,7 @@ export default function EditPlayerDialog(props) {
         }
       })
       .then(res => {
-        onUpdate();
+        onUpdate(id);
         setOpen(false)
       })
     } catch (err) {

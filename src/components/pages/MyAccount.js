@@ -85,87 +85,83 @@ export default function MyAccount() {
 
     return (
         <>
-        {userData.user ? (
-            <Fade left big>
-            <Container component="main" maxWidth="xs">
-            <div className={classes.paper}>
-              <Card variant="outlined">
-                <CardContent p={1}>
-                    <Container className={classes.center}>
-                    <Avatar src="/broken-image.jpg" className={classes.header} style={{ height: "60px", width: "60px"}}/>
-                    </Container>
-                    <Typography variant="h5" align="center">
-                        My account
+        <Fade left big>
+        <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+            <Card variant="outlined">
+            <CardContent p={1}>
+                <Container className={classes.center}>
+                <Avatar src="/broken-image.jpg" className={classes.header} style={{ height: "60px", width: "60px"}}/>
+                </Container>
+                <Typography variant="h5" align="center">
+                    My account
+                </Typography>
+                    <Typography align="center" variant="body2">
+                        Modify account information here
                     </Typography>
-                        <Typography align="center" variant="body2">
-                            Modify account information here
-                        </Typography>
-                        <br></br>
-                        <Divider/>
-                        <form className={classes.form} noValidate onSubmit={submitName}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="change-name"
-                            type="text"
-                            defaultValue={userData.user.userName}
-                            autoFocus
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        {name ? (
-                            <Button
-                            type="submit"
-                            size="large"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disableElevation
+                    <br></br>
+                    <Divider/>
+                    <form className={classes.form} noValidate onSubmit={submitName}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="change-name"
+                        type="text"
+                        defaultValue={userData.user.userName}
+                        autoFocus
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    {name ? (
+                        <Button
+                        type="submit"
+                        size="large"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        disableElevation
+                    >
+                        Save
+                    </Button>
+                    ) : (
+                        <Button
+                        size="large"
+                        fullWidth
+                        variant="contained"
+                        className={classes.submit}
+                        disableElevation
+                        disabled
                         >
-                            Save
+                        Save
                         </Button>
-                        ) : (
-                            <Button
-                            size="large"
-                            fullWidth
-                            variant="contained"
-                            className={classes.submit}
-                            disableElevation
-                            disabled
-                            >
-                            Save
-                            </Button>
-                        )}
-                        </form>
+                    )}
+                    </form>
 
-                        <ChangePassword/>
+                    <ChangePassword/>
 
-                        <Button 
-                            className={classes.button}
-                            variant="outlined"          
-                            size="small"
-                            fullWidth={true}
-                            >
-                                Change profile photo
-                        </Button>
-                        <Button 
-                            className={classes.button}
-                            variant="outlined"          
-                            size="small"
-                            fullWidth={true}
-                            >
-                                Change team
-                        </Button>
-                    </CardContent>
-                </Card> 
+                    <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="small"
+                        fullWidth={true}
+                        >
+                            Change profile photo
+                    </Button>
+                    <Button 
+                        className={classes.button}
+                        variant="outlined"          
+                        size="small"
+                        fullWidth={true}
+                        >
+                            Change team
+                    </Button>
+                </CardContent>
+            </Card> 
             </div>
         </Container>
     </Fade>
-        ) : (
-            <RedirectLogin/>
-        ) }
-        </>
+    </>
     );
 }

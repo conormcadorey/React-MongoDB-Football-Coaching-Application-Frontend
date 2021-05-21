@@ -132,7 +132,6 @@ export default function DisplayTeam(props) {
                                 name={name} 
                                 id={_id} 
                                 players={players}
-                                //onUpdate={() => handleUpdate()}
                                 onUpdate={(id) => {
                                     const newPlayers = players.filter(player => player._id !== id)
                                     setPlayers(newPlayers)
@@ -196,7 +195,7 @@ export default function DisplayTeam(props) {
                     <Typography align="center" variant="body2">
                         <CircularProgress />
                         <br></br><br></br>
-                        You currently have no registered players. <Link>Click here to create one.</Link>
+                        You currently have no registered players. <Link to="/createplayer" style={{color: "black"}}>Click here to create one.</Link>
                     </Typography>   
                 </CardContent>
             </Card>

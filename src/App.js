@@ -12,12 +12,12 @@ import Register from "./components/auth/Register";
 import CreatePlayer from "./components/pages/CreatePlayer";
 import SavedFixtures from "./components/pages/SavedFixtures";
 import MyFixtures from "./components/pages/Fixtures";
-import EditPlayerDialog from "./components/pages/EditPlayerDialog";
 import MyAccount from "./components/pages/MyAccount";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 import UserContext from "./context/UserContext";
 
-import Test from "./components/pages/Test";
+//import Test from "./components/pages/Test";
 
 import "./styles.css";
 
@@ -26,44 +26,53 @@ export default function App() {
     const [userData, setUserData] = useState({
         token: undefined,
         user: undefined,
+        isLoggedIn: false,
+        isLoading: true
     });
 
-    //run this effect when the app starts up
-    //it checks the browser for an existing jwttoken from a previous session 
     useEffect(() => {
         checkLoggedIn(); 
     }, []); 
 
-        const checkLoggedIn = async () => {
-            let token = localStorage.getItem("auth-token");
-            //set token to an empty string if null
-                if (token === null) {
-                localStorage.setItem("auth-token", ""); 
-                token = "";
-            }
-            //if a token exists axios returns response as a json object
-            //next check if the token is valid 
-            const tokenRes = await Axios.post(
-                "http://localhost:5000/users/tokenIsValid",
-                null,
-                { headers: {"x-auth-token": token } }
-                );
-                //if tokenIsValid true 
-                if (tokenRes.data) {
-                    const userRes = await Axios.get("http://localhost:5000/users/", 
-                    {headers: {"x-auth-token": token },});
-                //state is now globally accessible thru UserContext.Provider
+    const checkLoggedIn = async () => {
+        
+        let token = localStorage.getItem("auth-token");
+            if (token === null) {
+            localStorage.setItem("auth-token", ""); 
+            token = "";
+        }
+        //if a token exists axios returns response as a json object
+        //next check if the token is valid 
+        const tokenRes = await Axios.post(
+        "http://localhost:5000/users/tokenIsValid",
+        null,
+        { headers: {"x-auth-token": token } }
+        );
+
+        if (tokenRes.data) {
+            const userRes = await Axios.get("http://localhost:5000/users/", 
+            {headers: {"x-auth-token": token },
+            })
                 setUserData({
                     token,
                     user: userRes.data,
-                })
-                .then(
-                    console.log("SUCCESS")
-                )
-                .catch( error => console.log("NO USER"));
-                }
-        };
-       
+                    isLoggedIn: true,
+                    isLoading: false
+            })
+        }
+      };
+
+      /*
+      console.log("USER TOKEN")
+      console.log(userData.token)
+      console.log("USER DATA")
+      console.log(userData.user)
+      console.log("LOADING")
+      console.log(userData.isLoading)
+      console.log("LDGGED IN")
+      console.log(userData.isLoggedIn)
+      */
+ 
     return ( 
      <> 
         <Router>
@@ -71,18 +80,16 @@ export default function App() {
             <Header />
             <div className="container">
             <Switch>
-                <Route exact path="/" component={Home} />
+                <ProtectedRoute exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
-                <Route path="/createplayer" component={CreatePlayer} />
-                <Route path="/myteam" component={MyTeam} />
-                <Route path="/match" component={Match} />
-                <Route path="/fixtures" component={MyFixtures} />
-                <Route path="/savedfixtures" component={SavedFixtures} />
-                <Route path="/editplayer/:id" component={EditPlayerDialog}/>
-                <Route path="/myaccount" component={MyAccount} />
-
-                <Route path="/test" component={Test} />
+                <ProtectedRoute path="/createplayer" component={CreatePlayer} />
+                <ProtectedRoute path="/myteam" component={MyTeam} />
+                <ProtectedRoute path="/match" component={Match} />
+                <ProtectedRoute path="/fixtures" component={MyFixtures} />
+                <ProtectedRoute path="/savedfixtures" component={SavedFixtures} />
+                <ProtectedRoute path="/myaccount" component={MyAccount} />
+                {/*<Route path="/test" component={Test} />*/}
             </Switch>
             </div>
             <Footer/>

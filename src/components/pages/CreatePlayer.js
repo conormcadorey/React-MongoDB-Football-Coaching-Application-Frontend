@@ -38,10 +38,6 @@ export default function CreatePlayer() {
     setOpen(true);
   };
 
-  useEffect(() => {
-    if (!userData.user) history.push("/login");
-  }); 
-
   //submit form function
   const submit = async (e) => {
       e.preventDefault(); 
@@ -52,7 +48,6 @@ export default function CreatePlayer() {
         const newPlayer = { name, position, number, team };
         let token = localStorage.getItem("auth-token");
         const url = "http://localhost:5000/players";
-        console.log(token);
 
         axios.post(`${url}/`, newPlayer, {
           headers: {
@@ -108,7 +103,7 @@ export default function CreatePlayer() {
                 <CreateIcon fontSize="large"/>
                 <br></br>
                 <Typography variant="h5" align="center">
-                    Create a new player
+                    Create a new {team} player
                 </Typography>
               </div>
                 <form className={classes.form} noValidate onSubmit={submit}>

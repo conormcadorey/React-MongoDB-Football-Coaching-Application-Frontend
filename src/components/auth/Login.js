@@ -37,6 +37,8 @@ export default function Login() {
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
+        isLoggedIn: true,
+        isLoading: false
       });
       //add token to local storage
       localStorage.setItem("auth-token", loginRes.data.token);

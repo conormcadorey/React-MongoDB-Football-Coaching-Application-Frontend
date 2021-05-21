@@ -1,3 +1,12 @@
+import React from "react";
+
+export default function Test() {
+
+    return(
+        <h1>TEST</h1>
+    )
+}
+
 /*
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -145,4 +154,37 @@ export default function DisplayTeam(props) {
     );
 }
 */
+
+
+
+/*
+    const checkLoggedIn = async () => {
+        let token = localStorage.getItem("auth-token");
+            if (token === null) {
+            localStorage.setItem("auth-token", ""); 
+            token = "";
+        }
+        //if a token exists axios returns response as a json object
+        //next check if the token is valid 
+        const tokenRes = await Axios.post(
+        "http://localhost:5000/users/tokenIsValid",
+        null,
+        { headers: {"x-auth-token": token } }
+        );
+
+        if (tokenRes.data) {
+            const userRes = await Axios.get("http://localhost:5000/users/", 
+            {headers: {"x-auth-token": token },})
+            .then( res => {
+                setUserData({
+                    token,
+                    user: userRes.data,
+                    isLoggedIn: true,
+                    isLoading: false
+                })
+            })
+            .catch( error => console.log("NO USER"));
+            }
+    };
+    */
 

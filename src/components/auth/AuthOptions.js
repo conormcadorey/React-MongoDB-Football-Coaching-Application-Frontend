@@ -18,15 +18,13 @@ export default function AuthOptions() {
 
     const register = () => history.push("/register");
     const login = () => history.push("/login");
-    //log out user button 
-    //sets userData/token back to undefined 
-    //then clear token from local storage
     const logout = () => {
         setUserData({
             token: undefined,
             user: undefined
         });
         localStorage.setItem("auth-token", "");
+        history.push("/login");
     };
 
     const handleClick = (event) => {

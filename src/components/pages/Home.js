@@ -3,8 +3,6 @@ import UserContext from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import NewMatchDialog from "./NewMatchDialog";
 
-import RedirectToLogin from "./RedirectLogin";
-
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
@@ -19,13 +17,6 @@ import Fade from 'react-reveal/Fade';
 export default function Home() {
 
     const {userData} = useContext(UserContext);
-
-    /*
-    useEffect(() => {
-        //if userData undefined redirect to login 
-        if (!userData.user) history.push("/login");
-    });
-    */
 
     const useStyles = makeStyles({
         root: {
@@ -49,7 +40,6 @@ export default function Home() {
 
 return (
         <>
-        {userData.user ? (
             <Fade left big>
             <Container component="main">
                 <div className="page">
@@ -119,9 +109,7 @@ return (
                 </div>
             </Container>
             </Fade>
-        ) : (
-        <RedirectToLogin/>
-        )}
+
         </>
   );
 }

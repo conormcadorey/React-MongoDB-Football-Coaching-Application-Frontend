@@ -158,7 +158,7 @@ return (
                     <Typography align="center" variant="body2">
                         <CircularProgress />
                         <br></br><br></br>
-                        You currently have no upcoming fixtures. <Link>Click here to create one.</Link>
+                        You currently have no upcoming fixtures. <Link to="/" style={{color: "black"}}>Click here to create one.</Link>
                     </Typography>   
                 </CardContent>
             </Card>

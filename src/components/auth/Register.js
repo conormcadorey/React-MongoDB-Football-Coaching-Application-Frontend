@@ -65,6 +65,8 @@ export default function Register() {
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
+        isLoggedIn: true,
+        isLoading: false
       });
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push("/");

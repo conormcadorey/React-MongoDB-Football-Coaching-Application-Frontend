@@ -74,16 +74,16 @@ export default function NewMatchDialog(props) {
       setIsHome((prev) => !prev);
     };
 
-    /////////////////////////
-    const useStyles = makeStyles({
-      root: {
-        paddingTop: '1rem',
-        paddingBottom: '1rem',
-      },
-    });
+  const useStyles = makeStyles({
+    root: {
+      paddingTop: '1rem',
+      paddingBottom: '1rem',
+    },
 
-    const classes = useStyles();
-    /////////////////////////
+  });
+
+  const classes = useStyles();
+
 
     return (
       <>
@@ -118,9 +118,10 @@ export default function NewMatchDialog(props) {
                 <FormControl component="fieldset">
                     <FormGroup aria-label="position" row>
                         <FormControlLabel
-                        control={<Switch checked={homeAway} onChange={toggleChecked} style={{color: "#00ffc0"}} />}
+                        control={<Switch checked={homeAway} onChange={toggleChecked} color="default"/>}
                         label={homeAway? ("Home") : ("Away")}
                         labelPlacement="end"
+                        color="secondary"
                         />
                     </FormGroup>
                 </FormControl>
